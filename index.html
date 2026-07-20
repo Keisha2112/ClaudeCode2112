@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Гармония — девелопер полного цикла. Проектирование, строительство и благоустройство жилых комплексов. Новый проект — ЖК «Гармония 6»." />
-  <title>Гармония — строительство жилых комплексов</title>
+  <meta name="description" content="Клубный коттеджный посёлок «Гармония» в 10 минутах от Томска: 57 домовладений в едином стиле хай-тек, участки от 6 до 11 соток, 3 проекта домов. В шаге от города, в единении с природой." />
+  <title>Гармония — клубный коттеджный посёлок в 10 минутах от Томска</title>
 
   <!--
     ────────────────────────────────────────────────────────────────
-    Одностраничный сайт строительной компании «Гармония».
+    Одностраничный сайт клубного коттеджного посёлка «Гармония».
     Всё в одном файле: без сборки, открывается двойным кликом,
     легко разместить на GitHub Pages / любом хостинге.
 
-    ВАЖНО: тексты и характеристики проекта «Гармония 6» — ЗАГЛУШКИ.
-    Их нужно заменить реальными данными из презентации (PDF).
-    Места для замены помечены комментариями со словом TODO.
-    Данные о проектах вынесены в объект PROJECTS в конце файла (в script-блоке),
+    Данные посёлка и проектов домов заполнены из презентации.
+    Проекты домов вынесены в объект PROJECTS в конце файла (в script-блоке),
     чтобы их было удобно править в одном месте.
     ────────────────────────────────────────────────────────────────
   -->
@@ -29,9 +27,11 @@
       --paper-2: #efece6;
       --line: #e2ddd4;
       --muted: #6b7078;
-      --accent: #c08a34;      /* тёплая бронза */
+      --accent: #c08a34;      /* тёплая бронза — под вечерние рендеры */
       --accent-dark: #a5722450;
       --accent-soft: #f2e8d7;
+      --forest: #1b2a1e;      /* глубокий лесной зелёный — под природу посёлка */
+      --forest-2: #223528;
       --white: #ffffff;
       --radius: 14px;
       --radius-sm: 9px;
@@ -113,15 +113,15 @@
     /* ── Главная / hero ────────────────────────────────────────── */
     .hero {
       background:
-        radial-gradient(120% 120% at 100% 0%, rgba(192,138,52,.18), transparent 55%),
+        radial-gradient(120% 120% at 100% 0%, rgba(192,138,52,.20), transparent 55%),
         linear-gradient(180deg, var(--graphite), var(--graphite-2));
       color: #eef0f2; border-radius: 0 0 28px 28px; overflow: hidden;
     }
     .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center;
       padding-top: 66px; padding-bottom: 74px; }
-    .hero h1 { color: #fff; font-size: clamp(34px, 5vw, 58px); letter-spacing: -.01em; }
+    .hero h1 { color: #fff; font-size: clamp(34px, 5vw, 56px); letter-spacing: -.01em; }
     .hero h1 em { color: var(--accent); font-style: normal; }
-    .hero p { color: #c7ccd2; font-size: 19px; margin: 20px 0 30px; max-width: 52ch; }
+    .hero p { color: #c7ccd2; font-size: 19px; margin: 20px 0 30px; max-width: 54ch; }
     .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
     .btn {
       display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 999px;
@@ -136,21 +136,22 @@
       border-radius: var(--radius); padding: 6px; box-shadow: var(--shadow);
     }
     .hero-visual {
-      border-radius: 10px; height: 340px; position: relative; overflow: hidden;
+      border-radius: 10px; height: 340px; position: relative; overflow: hidden; width: 100%; border: 0; cursor: pointer;
       background:
+        radial-gradient(120% 120% at 80% 15%, rgba(192,138,52,.35), transparent 55%),
         repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 44px),
         repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 44px),
         linear-gradient(135deg, #2b3138, #3a424b);
     }
     .hero-visual::after {
-      content: "рендер проекта"; position: absolute; inset: auto 0 0 0; padding: 14px 16px;
+      content: "визуализация посёлка"; position: absolute; inset: auto 0 0 0; padding: 14px 16px;
       background: linear-gradient(0deg, rgba(0,0,0,.55), transparent); color: #cfd4da;
-      font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+      font-size: 12px; letter-spacing: .18em; text-transform: uppercase; text-align: left; }
     .hero-visual .badge {
       position: absolute; top: 14px; left: 14px; background: var(--accent); color: #201704;
       font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 999px; letter-spacing: .04em; }
-    .hero-visual .g6 { position: absolute; top: 50%; left: 20px; transform: translateY(-60%);
-      font-family: var(--serif); font-size: 46px; color: rgba(255,255,255,.9); }
+    .hero-visual .g6 { position: absolute; top: 50%; left: 22px; transform: translateY(-60%);
+      font-family: var(--serif); font-size: 46px; color: rgba(255,255,255,.92); text-align: left; }
 
     /* ── Статистика ────────────────────────────────────────────── */
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 42px; }
@@ -172,11 +173,12 @@
     .split { display: grid; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
     .about-visual { border-radius: var(--radius); height: 420px; box-shadow: var(--shadow); position: relative; overflow: hidden;
       background:
+        radial-gradient(120% 90% at 100% 100%, rgba(27,42,30,.5), transparent 55%),
         radial-gradient(120% 90% at 0% 0%, rgba(192,138,52,.22), transparent 50%),
         repeating-linear-gradient(115deg, rgba(0,0,0,.05) 0 2px, transparent 2px 26px),
         linear-gradient(135deg, #dfd8cc, #cbc2b3); }
-    .about-visual::after { content: "фото объекта / команды"; position: absolute; inset: auto 0 0 0; padding: 12px 16px;
-      color: #5c5648; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; background: linear-gradient(0deg, rgba(255,255,255,.6), transparent); }
+    .about-visual::after { content: "рендер посёлка «Гармония»"; position: absolute; inset: auto 0 0 0; padding: 12px 16px;
+      color: #4a4437; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; background: linear-gradient(0deg, rgba(255,255,255,.6), transparent); }
 
     .facts { list-style: none; margin-top: 22px; display: grid; gap: 14px; }
     .facts li { display: flex; gap: 12px; align-items: flex-start; }
@@ -185,27 +187,56 @@
     .facts span { color: var(--muted); font-size: 14px; }
 
     .band { background: var(--graphite); color: #e7e9ec; border-radius: 24px; margin: 0 auto; }
+    .band.forest { background:
+        radial-gradient(120% 120% at 100% 0%, rgba(192,138,52,.14), transparent 55%),
+        linear-gradient(160deg, var(--forest), var(--forest-2)); }
     .band .wrap { padding: 60px 40px; }
     .band h2 { color: #fff; }
-    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 34px; counter-reset: s; }
-    .step { padding-top: 18px; border-top: 2px solid rgba(255,255,255,.16); }
-    .step::before { counter-increment: s; content: "0" counter(s); font-family: var(--serif); font-size: 26px; color: var(--accent); }
-    .step h3 { color: #fff; font-size: 18px; margin: 8px 0; }
-    .step p { color: #aab0b7; font-size: 14px; }
+    .band .lead { color: #b9c2ba; }
 
-    /* ── Проекты ───────────────────────────────────────────────── */
+    /* ── Инженерные коммуникации — плитки ключ/значение ─────────── */
+    .util { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 38px; }
+    .util .u { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm); }
+    .util .u .k { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+    .util .u .v { font-family: var(--serif); font-size: 22px; color: var(--graphite); margin-top: 6px; }
+    .util .u .d { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+    /* ── Проекты домов ─────────────────────────────────────────── */
     .proj-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
-    .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 26px; margin-top: 38px; }
+    /* Сводка по посёлку (одно домовладение-проект в презентации) */
+    .village {
+      margin-top: 34px; border-radius: 20px; overflow: hidden; color: #eef0f2;
+      background:
+        radial-gradient(120% 120% at 100% 0%, rgba(192,138,52,.16), transparent 55%),
+        linear-gradient(160deg, var(--forest), var(--forest-2));
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 0; box-shadow: var(--shadow); }
+    .village .vtext { padding: 40px; }
+    .village .vtext h3 { color: #fff; font-size: 26px; margin-bottom: 10px; }
+    .village .vtext p { color: #b9c2ba; font-size: 15px; max-width: 46ch; }
+    .village .vstats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 22px; }
+    .village .vstat { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 14px 16px; }
+    .village .vstat .n { font-family: var(--serif); font-size: 24px; color: #fff; }
+    .village .vstat .l { color: #aab4ab; font-size: 12px; margin-top: 2px; }
+    .village .vmap { position: relative; min-height: 260px;
+      background:
+        repeating-linear-gradient(58deg, rgba(255,255,255,.06) 0 2px, transparent 2px 30px),
+        repeating-linear-gradient(-58deg, rgba(255,255,255,.05) 0 2px, transparent 2px 30px),
+        linear-gradient(135deg, #2a3a2c, #34472f); }
+    .village .vmap::after { content: "генеральный план"; position: absolute; inset: auto 0 0 0; padding: 12px 16px;
+      color: #cdd6cb; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; background: linear-gradient(0deg, rgba(0,0,0,.4), transparent); }
+
+    .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 26px; margin-top: 30px; }
     .proj {
       text-align: left; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
       overflow: hidden; box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; padding: 0; }
     .proj:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
     .proj .thumb { height: 200px; position: relative;
-      background: repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 40px),
-                  linear-gradient(135deg, #cfd4da, #aeb6bf); }
+      background:
+        radial-gradient(120% 120% at 80% 10%, rgba(192,138,52,.28), transparent 55%),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 40px),
+        linear-gradient(135deg, #cfd4da, #aeb6bf); }
     .proj .thumb .g { position: absolute; inset: 0; display: grid; place-items: center;
-      font-family: var(--serif); font-size: 40px; color: rgba(255,255,255,.85); text-shadow: 0 2px 12px rgba(0,0,0,.25); }
-    .proj.featured .thumb { background: linear-gradient(135deg, #2b3138, #454e57); }
+      font-family: var(--serif); font-size: 38px; color: rgba(255,255,255,.9); text-shadow: 0 2px 12px rgba(0,0,0,.25); }
     .status { position: absolute; top: 14px; left: 14px; font-size: 12px; font-weight: 700; letter-spacing: .04em;
       padding: 6px 12px; border-radius: 999px; background: #fff; color: var(--ink); box-shadow: var(--shadow-sm); }
     .status.build { background: var(--accent); color: #201704; }
@@ -247,7 +278,7 @@
       max-height: 88vh; overflow: auto; box-shadow: var(--shadow); animation: pop .25s ease; }
     @keyframes pop { from { transform: scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
     .modal .hd { height: 260px; position: relative;
-      background: radial-gradient(120% 120% at 100% 0, rgba(192,138,52,.25), transparent 55%), linear-gradient(135deg, #2b3138, #454e57); }
+      background: radial-gradient(120% 120% at 100% 0, rgba(192,138,52,.3), transparent 55%), linear-gradient(135deg, #2b3138, #454e57); }
     .modal .hd .g { position: absolute; left: 28px; bottom: 22px; font-family: var(--serif); font-size: 40px; color: #fff; }
     .modal .hd .status { top: 18px; left: 18px; }
     .modal .close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 0;
@@ -260,15 +291,16 @@
     .spec .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
     .spec .v { font-family: var(--serif); font-size: 19px; color: var(--graphite); margin-top: 4px; }
     .modal .desc p { color: var(--ink); margin-bottom: 12px; }
+    .modal .infra-title { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--ink); margin-top: 6px; }
     .modal .infra { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
     .modal .infra li { background: var(--accent-soft); color: #7a5514; font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 999px; }
-    .todo { background: #fff7e8; border: 1px dashed var(--accent); color: #8a6414; font-size: 13px; padding: 10px 14px; border-radius: 10px; margin-top: 18px; }
 
     /* ── Адаптив ───────────────────────────────────────────────── */
     @media (max-width: 900px) {
-      .hero .wrap, .split, .contact { grid-template-columns: 1fr; }
+      .hero .wrap, .split, .contact, .village { grid-template-columns: 1fr; }
       .hero-card { order: -1; }
-      .stats, .steps { grid-template-columns: repeat(2, 1fr); }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .village .vmap { min-height: 200px; order: -1; }
       .tabs { display: none; position: absolute; top: 70px; left: 0; right: 0; flex-direction: column;
         background: var(--white); border-bottom: 1px solid var(--line); padding: 8px; gap: 4px; }
       .tabs.show { display: flex; }
@@ -277,7 +309,8 @@
       .nav-cta { display: none; }
     }
     @media (max-width: 520px) {
-      .stats, .steps { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+      .village .vstats { grid-template-columns: 1fr; }
       section { padding: 54px 0; }
     }
     :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
@@ -290,17 +323,17 @@
     <div class="wrap nav">
       <a class="brand" href="#" data-tab="home" aria-label="Гармония — на главную">
         <span class="mark">Г</span>
-        <span><span class="name">ГАРМОНИЯ</span><span class="sub">девелопмент</span></span>
+        <span><span class="name">ГАРМОНИЯ</span><span class="sub">клубный посёлок</span></span>
       </a>
 
       <nav class="tabs" id="tabs" role="tablist" aria-label="Разделы сайта">
         <button class="tab-btn" role="tab" data-tab="home" aria-selected="true">Главная</button>
-        <button class="tab-btn" role="tab" data-tab="about" aria-selected="false">О компании</button>
-        <button class="tab-btn" role="tab" data-tab="projects" aria-selected="false">Проекты</button>
+        <button class="tab-btn" role="tab" data-tab="about" aria-selected="false">О посёлке</button>
+        <button class="tab-btn" role="tab" data-tab="projects" aria-selected="false">Проекты домов</button>
         <button class="tab-btn" role="tab" data-tab="contacts" aria-selected="false">Контакты</button>
       </nav>
 
-      <a class="nav-cta" data-tab="contacts" href="#">Связаться</a>
+      <a class="nav-cta" data-tab="contacts" href="#">Записаться</a>
       <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span></button>
     </div>
   </header>
@@ -311,101 +344,130 @@
       <div class="hero">
         <div class="wrap">
           <div>
-            <span class="eyebrow">Девелопер полного цикла</span>
-            <h1>Строим дома,<br>в которых хочется <em>жить</em></h1>
-            <!-- TODO: из презентации — уточнить слоган и позиционирование компании -->
-            <p>«Гармония» проектирует и возводит жилые комплексы: от идеи и архитектуры до благоустроенного двора и передачи ключей.</p>
+            <span class="eyebrow">Клубный коттеджный посёлок</span>
+            <h1>В шаге от города,<br>в единении с <em>природой</em></h1>
+            <p>«Гармония» — уникальное закрытое камерное пространство для тех, кто ценит архитектуру, тишину, приватность и высокий уровень жизни за городом.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" data-tab="projects" href="#">Смотреть проекты →</a>
-              <a class="btn btn-ghost" data-tab="about" href="#">О компании</a>
+              <a class="btn btn-primary" data-tab="projects" href="#">Проекты домов →</a>
+              <a class="btn btn-ghost" data-tab="about" href="#">О посёлке</a>
             </div>
 
             <div class="stats">
-              <!-- TODO: из презентации — реальные цифры компании -->
-              <div class="stat"><div class="n">12</div><div class="l">лет на рынке</div></div>
-              <div class="stat"><div class="n">5</div><div class="l">сданных ЖК</div></div>
-              <div class="stat"><div class="n">320&nbsp;000</div><div class="l">м² построено</div></div>
-              <div class="stat"><div class="n">4&nbsp;800</div><div class="l">семей заселилось</div></div>
+              <div class="stat"><div class="n">6,2</div><div class="l">гектара — площадь посёлка</div></div>
+              <div class="stat"><div class="n">57</div><div class="l">домовладений</div></div>
+              <div class="stat"><div class="n">3</div><div class="l">проекта домов</div></div>
+              <div class="stat"><div class="n">10</div><div class="l">минут до Томска</div></div>
             </div>
           </div>
 
           <div class="hero-card">
-            <button class="hero-visual" data-project="harmony-6" aria-label="Открыть проект Гармония 6" style="width:100%;border:0;cursor:pointer">
-              <span class="badge">Новый проект</span>
-              <span class="g6">Гармония&nbsp;6</span>
+            <button class="hero-visual" data-tab="projects" aria-label="Смотреть проекты домов">
+              <span class="badge">10 минут от Томска</span>
+              <span class="g6">Гармония</span>
             </button>
           </div>
         </div>
       </div>
 
       <section class="wrap">
-        <span class="eyebrow">Что мы делаем</span>
-        <h2 class="title">Полный цикл девелопмента под одной крышей</h2>
-        <p class="lead">Мы отвечаем за проект на каждом этапе — поэтому качество и сроки в наших руках, а не разбросаны между подрядчиками.</p>
+        <span class="eyebrow">Концепция</span>
+        <h2 class="title">Единое пространство, продуманное до мелочей</h2>
+        <p class="lead">Здесь нет хаотичной застройки и разрозненных решений — каждый дом, улица и участок воспринимаются частью единой продуманной среды.</p>
         <div class="grid-cards">
-          <div class="card"><div class="ic">✎</div><h3>Проектирование</h3><p>Архитектура, планировки и инженерия, продуманные под реальный сценарий жизни.</p></div>
-          <div class="card"><div class="ic">▲</div><h3>Строительство</h3><p>Собственные бригады и контроль качества на площадке — от котлована до фасада.</p></div>
-          <div class="card"><div class="ic">❋</div><h3>Благоустройство</h3><p>Дворы без машин, детские и спортивные зоны, озеленение и удобные общественные пространства.</p></div>
-          <div class="card"><div class="ic">◈</div><h3>Сервис и УК</h3><p>Сопровождение после сдачи: гарантия, управляющая компания, забота о жителях.</p></div>
+          <div class="card"><div class="ic">⌖</div><h3>Идеальная локация</h3><p>В 10 минутах от Томска — тихая живописная локация на юго-востоке Томского района, рядом с селом Зоркальцево.</p></div>
+          <div class="card"><div class="ic">◈</div><h3>Единая архитектура</h3><p>Все дома выполнены в стиле хай-тек: чёткая геометрия, панорамное остекление и плоская кровля.</p></div>
+          <div class="card"><div class="ic">❖</div><h3>Закрытое пространство</h3><p>Приватная камерная территория всего на 57 домовладений — для узкого круга соседей.</p></div>
+          <div class="card"><div class="ic">❋</div><h3>Зелёная территория</h3><p>6,2 га в окружении леса, объединённые в единый ландшафтный парк без сплошных заборов.</p></div>
         </div>
       </section>
     </div>
 
-    <!-- ══════════════════ ВКЛАДКА: О КОМПАНИИ ══════════════════ -->
+    <!-- ══════════════════ ВКЛАДКА: О ПОСЁЛКЕ ══════════════════ -->
     <div class="panel" id="about" role="tabpanel">
       <section class="wrap">
         <div class="split">
           <div>
-            <span class="eyebrow">О компании</span>
-            <h2 class="title">Создаём среду, в которой хочется оставаться</h2>
-            <!-- TODO: из презентации — реальное описание компании, история, миссия -->
-            <p class="lead">«Гармония» — строительно-девелоперская компания, которая проектирует и возводит комфортное жильё. Мы верим, что дом — это не только квадратные метры, но и двор, свет, воздух и соседи, с которыми приятно жить рядом.</p>
+            <span class="eyebrow">О посёлке</span>
+            <h2 class="title">Место для тех, кто выбирает не только дом, но и окружение</h2>
+            <p class="lead">«Гармония» расположена в д. Петровский участок — тихой живописной локации на юго-востоке Томского района, неподалёку от села Зоркальцево. До центра Томска — примерно 10 минут на автомобиле.</p>
             <ul class="facts">
-              <li><span class="t">✦</span><div><b>Человекоцентричный подход</b><span>Планировки и дворы проектируем от сценариев жизни людей, а не от таблицы продаж.</span></div></li>
-              <li><span class="t">✦</span><div><b>Ответственность за результат</b><span>Полный цикл — от участка до управляющей компании — держим внутри.</span></div></li>
-              <li><span class="t">✦</span><div><b>Долгосрочное качество</b><span>Материалы и решения, которые остаются актуальными спустя годы.</span></div></li>
+              <li><span class="t">✦</span><div><b>Единая среда</b><span>Каждый дом, улица и участок — часть одной продуманной композиции в стиле хай-тек.</span></div></li>
+              <li><span class="t">✦</span><div><b>Приватность и камерность</b><span>Закрытое пространство всего на 57 домовладений — тишина и высокий уровень жизни за городом.</span></div></li>
+              <li><span class="t">✦</span><div><b>Природа рядом</b><span>Участки от 6 до 11 соток в окружении леса, единый ландшафтный парк.</span></div></li>
             </ul>
           </div>
           <div class="about-visual" aria-hidden="true"></div>
         </div>
       </section>
 
-      <div class="band">
+      <div class="band forest">
         <div class="wrap">
-          <span class="eyebrow">Как мы работаем</span>
-          <h2 class="title">Путь проекта — от идеи до ключей</h2>
-          <div class="steps">
-            <div class="step"><h3>Концепция</h3><p>Анализ участка, аудитория, архитектурная идея и экономика проекта.</p></div>
-            <div class="step"><h3>Проект</h3><p>Рабочая документация, планировки, инженерные и фасадные решения.</p></div>
-            <div class="step"><h3>Стройка</h3><p>Возведение с контролем качества и графика на каждом этапе.</p></div>
-            <div class="step"><h3>Заселение</h3><p>Передача ключей, благоустройство двора и работа управляющей компании.</p></div>
+          <span class="eyebrow">Технология строительства</span>
+          <h2 class="title">Современные дома, построенные на десятилетия</h2>
+          <p class="lead">Материалы и инженерные решения подобраны так, чтобы дом оставался прочным, энергоэффективным и красивым долгие годы.</p>
+          <div class="grid-cards">
+            <div class="card"><div class="ic">✦</div><h3>Архитектурная подсветка</h3><p>Контурное LED-освещение подчёркивает геометрию дома и создаёт эффектный вечерний образ.</p></div>
+            <div class="card"><div class="ic">◫</div><h3>Панорамное остекление</h3><p>Максимум естественного света и ощущение открытого пространства в каждом доме.</p></div>
+            <div class="card"><div class="ic">▦</div><h3>Монолитный каркас</h3><p>Монолитный железобетонный каркас обеспечивает прочность, долговечность и надёжность конструкции.</p></div>
+            <div class="card"><div class="ic">◈</div><h3>Технологичный фасад</h3><p>Уникальное мраморное покрытие создаёт современный внешний облик и долговечность отделки.</p></div>
+            <div class="card"><div class="ic">▬</div><h3>Плоская кровля</h3><p>Возможность разместить инженерное оборудование: кондиционеры и солнечные панели.</p></div>
+            <div class="card"><div class="ic">▥</div><h3>Газобетонные стены</h3><p>Энергоэффективный материал с высокими показателями тепло- и шумоизоляции.</p></div>
           </div>
         </div>
       </div>
 
       <section class="wrap">
-        <span class="eyebrow">Почему выбирают нас</span>
-        <h2 class="title">Ценность, которую видно и через годы</h2>
+        <span class="eyebrow">Благоустройство территории</span>
+        <h2 class="title">Комфорт начинается за порогом дома</h2>
         <div class="grid-cards">
-          <div class="card"><div class="ic">⧗</div><h3>Сроки</h3><p>Прозрачный график и сдача в срок — обязательства, которые мы соблюдаем.</p></div>
-          <div class="card"><div class="ic">✓</div><h3>Качество</h3><p>Проверенные материалы и технический надзор на всех этапах строительства.</p></div>
-          <div class="card"><div class="ic">☂</div><h3>Двор без машин</h3><p>Безопасное пространство для детей и прогулок, парковка — по периметру и под землёй.</p></div>
-          <div class="card"><div class="ic">₽</div><h3>Прозрачная покупка</h3><p>Эскроу-счета, ипотека и рассрочка, честные условия без скрытых доплат.</p></div>
+          <div class="card"><div class="ic">▤</div><h3>Асфальтированные дороги</h3><p>Ровное покрытие подходит к каждому домовладению по всей территории посёлка.</p></div>
+          <div class="card"><div class="ic">☀</div><h3>Уличное освещение</h3><p>Свет по всей территории создаёт уютную атмосферу и безопасность в тёмное время.</p></div>
+          <div class="card"><div class="ic">❉</div><h3>Пешеходные зоны</h3><p>Благоустроенные дорожки обеспечивают комфортное передвижение по посёлку.</p></div>
+          <div class="card"><div class="ic">◇</div><h3>Концепция «чистое небо»</h3><p>Без сплошных заборов и нависающих проводов — единый ландшафтный парк с открытым видом.</p></div>
+        </div>
+      </section>
+
+      <section class="wrap" style="padding-top:0">
+        <span class="eyebrow">Инженерные коммуникации</span>
+        <h2 class="title">Всё для комфортной жизни за городом</h2>
+        <p class="lead">Инженерная инфраструктура посёлка продумана заранее, чтобы жизнь за городом была комфортной в любое время года.</p>
+        <div class="util">
+          <div class="u"><div class="k">Электричество</div><div class="v">до 15 кВт</div><div class="d">на домовладение</div></div>
+          <div class="u"><div class="k">Интернет</div><div class="v">Оптоволокно</div><div class="d">высокоскоростной</div></div>
+          <div class="u"><div class="k">Газ</div><div class="v">Магистральный</div><div class="d">подведён к посёлку</div></div>
+          <div class="u"><div class="k">Канализация</div><div class="v">Локальная</div><div class="d">на каждый участок</div></div>
+          <div class="u"><div class="k">Вода</div><div class="v">Скважина</div><div class="d">индивидуальная</div></div>
         </div>
       </section>
     </div>
 
-    <!-- ══════════════════ ВКЛАДКА: ПРОЕКТЫ ══════════════════ -->
+    <!-- ══════════════════ ВКЛАДКА: ПРОЕКТЫ ДОМОВ ══════════════════ -->
     <div class="panel" id="projects" role="tabpanel">
       <section class="wrap">
         <div class="proj-head">
           <div>
-            <span class="eyebrow">Проекты</span>
-            <h2 class="title">Наши жилые комплексы</h2>
-            <p class="lead">Флагманский проект — ЖК «Гармония 6». Ниже — реализованные и строящиеся комплексы компании.</p>
+            <span class="eyebrow">Проекты домов</span>
+            <h2 class="title">Три проекта в едином стиле хай-тек</h2>
+            <p class="lead">В посёлке — 57 домовладений на участках от 6 до 11 соток. Выберите проект дома и посмотрите характеристики и планировку.</p>
           </div>
         </div>
-        <!-- Карточки создаются из объекта PROJECTS (см. <script> внизу). -->
+
+        <!-- Сводка по посёлку «Гармония» (единственный проект из презентации) -->
+        <div class="village">
+          <div class="vtext">
+            <h3>Посёлок «Гармония»</h3>
+            <p>Единый архитектурный ансамбль в окружении природы, в 10 минутах от Томска. Генеральный план продуман так, чтобы каждый дом был частью общей композиции.</p>
+            <div class="vstats">
+              <div class="vstat"><div class="n">6,2 га</div><div class="l">площадь посёлка</div></div>
+              <div class="vstat"><div class="n">57</div><div class="l">домовладений</div></div>
+              <div class="vstat"><div class="n">3</div><div class="l">проекта домов</div></div>
+              <div class="vstat"><div class="n">6–11 сот.</div><div class="l">земельные участки</div></div>
+            </div>
+          </div>
+          <div class="vmap" aria-hidden="true"></div>
+        </div>
+
+        <!-- Карточки проектов домов создаются из объекта PROJECTS (см. <script> внизу). -->
         <div class="projects" id="projects-grid"></div>
       </section>
     </div>
@@ -414,15 +476,13 @@
     <div class="panel" id="contacts" role="tabpanel">
       <section class="wrap">
         <span class="eyebrow">Контакты</span>
-        <h2 class="title">Свяжитесь с нами</h2>
-        <p class="lead">Оставьте заявку — расскажем о проекте «Гармония 6», покажем планировки и условия покупки.</p>
+        <h2 class="title">Запишитесь на индивидуальную презентацию</h2>
+        <p class="lead">Проведём личную презентацию прямо на территории посёлка: покажем генеральный план, участки и проекты домов.</p>
         <div class="contact" style="margin-top:38px">
           <div class="cinfo">
-            <!-- TODO: из презентации — реальные контакты, адрес, телефон, e-mail -->
-            <div class="row"><span class="ic">☎</span><div><b>+7 (000) 000-00-00</b><span>Ежедневно с 9:00 до 21:00</span></div></div>
-            <div class="row"><span class="ic">✉</span><div><b>sales@garmoniya.example</b><span>Отдел продаж</span></div></div>
-            <div class="row"><span class="ic">⌖</span><div><b>Офис продаж</b><span>г. ______, ул. ______, д. ___</span></div></div>
-            <div class="row"><span class="ic">◫</span><div><b>Мы в соцсетях</b><span>Telegram · VK · YouTube</span></div></div>
+            <div class="row"><span class="ic">☎</span><div><b><a href="tel:+79039143490">+7 903 914 34 90</a></b><span>Позвоните или напишите — запишем на показ</span></div></div>
+            <div class="row"><span class="ic">⌖</span><div><b>Как добраться</b><span>Томская область, Зоркальцевское сельское поселение, д. Петровский участок, мкрн. Героя ВОВ А.П. Дмитриева</span></div></div>
+            <div class="row"><span class="ic">❋</span><div><b>Показ на территории посёлка</b><span>В 10 минутах от центра Томска, юго-восток Томского района, рядом с с. Зоркальцево</span></div></div>
           </div>
 
           <form class="contact-form" id="lead-form" novalidate>
@@ -431,9 +491,9 @@
             <label for="f-phone">Телефон</label>
             <input id="f-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
             <label for="f-msg">Сообщение</label>
-            <textarea id="f-msg" name="message" rows="3" placeholder="Интересует ЖК «Гармония 6»…"></textarea>
-            <button type="submit">Отправить заявку</button>
-            <p class="form-note" id="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. <!-- TODO: подключить приём заявок к почте/CRM --></p>
+            <textarea id="f-msg" name="message" rows="3" placeholder="Интересует посёлок «Гармония», проект дома…"></textarea>
+            <button type="submit">Записаться на презентацию</button>
+            <p class="form-note" id="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
           </form>
         </div>
       </section>
@@ -445,9 +505,9 @@
     <div class="wrap">
       <a class="brand" href="#" data-tab="home">
         <span class="mark">Г</span>
-        <span><span class="name">ГАРМОНИЯ</span><span class="sub">девелопмент</span></span>
+        <span><span class="name">ГАРМОНИЯ</span><span class="sub">клубный посёлок</span></span>
       </a>
-      <div style="font-size:14px">© <span id="year"></span> ГК «Гармония». Строительство жилых комплексов.</div>
+      <div style="font-size:14px">© <span id="year"></span> Клубный коттеджный посёлок «Гармония». Томск · +7 903 914 34 90</div>
     </div>
   </footer>
 
@@ -462,66 +522,87 @@
         <div class="sub" id="modal-sub"></div>
         <div class="specs" id="modal-specs"></div>
         <div class="desc" id="modal-desc"></div>
+        <div class="infra-title" id="modal-infra-title" style="display:none">Состав дома</div>
         <ul class="infra" id="modal-infra"></ul>
-        <div class="todo" id="modal-todo">⚠ Характеристики — предварительные заглушки. Заменю реальными данными из презентации «Гармония 6».</div>
       </div>
     </div>
   </div>
 
   <script>
   /* ══════════════════════════════════════════════════════════════
-     ДАННЫЕ ПРОЕКТОВ
-     Правьте здесь. Первый — «Гармония 6» (из презентации).
-     Значения помеченные /* TODO * / — заглушки, заменить из PDF.
+     ПРОЕКТЫ ДОМОВ ПОСЁЛКА «ГАРМОНИЯ»
+     Данные заполнены из презентации. Правьте здесь.
      ══════════════════════════════════════════════════════════════ */
   const PROJECTS = [
     {
-      id: "harmony-6",
-      name: "Гармония 6",
-      featured: true,
-      status: "Строится",           // TODO: из презентации
-      statusType: "build",           // build | done
-      meta: "Флагманский проект · срок сдачи — уточняется",
-      sub: "Новый жилой комплекс комфорт-класса от компании «Гармония».", // TODO
-      specs: [                       // TODO: все значения — из презентации
-        { k: "Класс жилья", v: "Комфорт+" },
-        { k: "Этажность", v: "— этажей" },
-        { k: "Квартиры", v: "студии – 3к" },
-        { k: "Площадь", v: "от __ м²" },
-        { k: "Срок сдачи", v: "__ кв. 20__" },
-        { k: "Расположение", v: "г. ______" }
+      id: "prizma",
+      name: "Призма",
+      status: "146 м²",
+      statusType: "build",
+      meta: "Одноэтажный дом · терраса · гараж на 2 авто",
+      sub: "Одноэтажный дом площадью 146 м² с террасой и гаражом на два автомобиля.",
+      specs: [
+        { k: "Площадь", v: "146 м²" },
+        { k: "Этажность", v: "1 этаж" },
+        { k: "Спальни", v: "3" },
+        { k: "Санузлы", v: "2" },
+        { k: "Гараж", v: "на 2 авто" },
+        { k: "Терраса", v: "есть" }
       ],
       desc: [
-        "Здесь появится описание проекта «Гармония 6» из презентации: концепция, архитектура, преимущества расположения и двора.",
-        "Пока это текст-заглушка — пришлите PDF, и я заменю его реальным содержанием и характеристиками."
+        "Компактный одноэтажный дом в стиле хай-тек: чёткая геометрия, панорамное остекление и максимум естественного света.",
+        "Всё необходимое на одном уровне — просторная гостиная, отдельная кухня, три спальни и два санузла."
       ],
-      infra: ["Двор без машин", "Детские площадки", "Подземный паркинг", "Коммерция на 1 этаже", "Озеленение"], // TODO
-      showTodo: true
+      infra: ["Гараж на 2 автомобиля", "Терраса", "Гостиная", "Кухня", "3 спальни", "2 санузла", "Котельная"]
     },
     {
-      id: "harmony-5", name: "Гармония 5", status: "Сдан", statusType: "done",
-      meta: "Реализованный проект", sub: "Жилой комплекс компании «Гармония».",
-      specs: [ { k: "Статус", v: "Заселён" }, { k: "Класс", v: "Комфорт" } ],
-      desc: ["Описание проекта появится после уточнения данных."], infra: [], showTodo: true
+      id: "panorama",
+      name: "Панорама",
+      status: "158 м²",
+      statusType: "build",
+      meta: "Одноэтажный дом · терраса · гараж на 2 авто",
+      sub: "Одноэтажный дом площадью 158 м² с террасой, кухней-гостиной и гаражом на два автомобиля.",
+      specs: [
+        { k: "Площадь", v: "158 м²" },
+        { k: "Этажность", v: "1 этаж" },
+        { k: "Спальни", v: "3" },
+        { k: "Санузлы", v: "2" },
+        { k: "Гараж", v: "на 2 авто" },
+        { k: "Прачечная", v: "есть" }
+      ],
+      desc: [
+        "Одноэтажный дом с открытой кухней-гостиной — светлое общее пространство для всей семьи.",
+        "Три спальни, два санузла, отдельная прачечная и котельная — комфортная жизнь на одном уровне."
+      ],
+      infra: ["Гараж на 2 автомобиля", "Терраса", "Кухня-гостиная", "3 спальни", "2 санузла", "Прачечная", "Котельная"]
     },
     {
-      id: "harmony-4", name: "Гармония 4", status: "Сдан", statusType: "done",
-      meta: "Реализованный проект", sub: "Жилой комплекс компании «Гармония».",
-      specs: [ { k: "Статус", v: "Заселён" }, { k: "Класс", v: "Комфорт" } ],
-      desc: ["Описание проекта появится после уточнения данных."], infra: [], showTodo: true
-    },
-    {
-      id: "harmony-3", name: "Гармония 3", status: "Сдан", statusType: "done",
-      meta: "Реализованный проект", sub: "Жилой комплекс компании «Гармония».",
-      specs: [ { k: "Статус", v: "Заселён" }, { k: "Класс", v: "Комфорт" } ],
-      desc: ["Описание проекта появится после уточнения данных."], infra: [], showTodo: true
+      id: "vista",
+      name: "Виста",
+      status: "199 м²",
+      statusType: "build",
+      meta: "Двухэтажный дом · терраса и балкон · гараж",
+      sub: "Двухэтажный дом площадью 199 м² с террасой, балконом и гаражом.",
+      specs: [
+        { k: "Площадь", v: "199 м²" },
+        { k: "Этажность", v: "2 этажа" },
+        { k: "Спальни", v: "4" },
+        { k: "Санузлы", v: "3" },
+        { k: "Гараж", v: "на 1 авто" },
+        { k: "Балкон", v: "есть" }
+      ],
+      desc: [
+        "Просторный двухэтажный дом с террасой и балконом — максимум пространства для большой семьи.",
+        "Четыре спальни, три санузла, кухня-столовая, отдельная мастерская и прачечная."
+      ],
+      infra: ["Гараж на 1 автомобиль", "Терраса", "Балкон", "Гостиная", "Кухня-столовая", "4 спальни", "3 санузла", "Прачечная", "Котельная", "Мастерская"]
     }
   ];
 
   /* ── Отрисовка карточек проектов ─────────────────────────────── */
   const grid = document.getElementById("projects-grid");
   grid.innerHTML = PROJECTS.map(p => `
-    <button class="proj ${p.featured ? "featured" : ""}" data-project="${p.id}" aria-label="Открыть проект ${p.name}">
+    <button class="proj" data-project="${p.id}" aria-label="Открыть проект дома ${p.name}">
       <div class="thumb"><span class="status ${p.statusType}">${p.status}</span><span class="g">${p.name}</span></div>
       <div class="body">
         <h3>${p.name}</h3>
@@ -547,6 +628,8 @@
     const t = e.target.closest("[data-tab]");
     if (t) { e.preventDefault(); openTab(t.dataset.tab); }
   });
+  // Переход по прямой ссылке на вкладку (#projects и т.п.), в т.ч. кнопками «назад/вперёд»
+  window.addEventListener("hashchange", () => openTab(location.hash.slice(1) || "home"));
   // Клавиатурная навигация по вкладкам
   document.getElementById("tabs").addEventListener("keydown", e => {
     const btns = [...tabBtns];
@@ -564,12 +647,12 @@
     document.getElementById("burger").setAttribute("aria-expanded", String(open));
   });
 
-  /* ── Модальное окно проекта ──────────────────────────────────── */
+  /* ── Модальное окно проекта дома ─────────────────────────────── */
   const modal = document.getElementById("modal");
   function openProject(id) {
     const p = PROJECTS.find(x => x.id === id);
     if (!p) return;
-    document.getElementById("modal-title").textContent = "ЖК «" + p.name + "»";
+    document.getElementById("modal-title").textContent = "Проект «" + p.name + "»";
     document.getElementById("modal-sub").textContent = p.sub || "";
     document.getElementById("modal-g").textContent = p.name;
     const st = document.getElementById("modal-status");
@@ -578,9 +661,10 @@
       .map(s => `<div class="spec"><div class="k">${s.k}</div><div class="v">${s.v}</div></div>`).join("");
     document.getElementById("modal-desc").innerHTML = (p.desc || []).map(d => `<p>${d}</p>`).join("");
     const infra = document.getElementById("modal-infra");
+    const hasInfra = p.infra && p.infra.length;
     infra.innerHTML = (p.infra || []).map(i => `<li>${i}</li>`).join("");
-    infra.style.display = (p.infra && p.infra.length) ? "flex" : "none";
-    document.getElementById("modal-todo").style.display = p.showTodo ? "block" : "none";
+    infra.style.display = hasInfra ? "flex" : "none";
+    document.getElementById("modal-infra-title").style.display = hasInfra ? "block" : "none";
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
     modal.querySelector(".close").focus();
@@ -597,7 +681,7 @@
   document.getElementById("lead-form").addEventListener("submit", e => {
     e.preventDefault();
     const note = document.getElementById("form-note");
-    note.textContent = "Спасибо! Заявка получена — мы свяжемся с вами. (Демо: отправка на сервер пока не подключена.)";
+    note.textContent = "Спасибо! Заявка получена — мы свяжемся с вами и запишем на показ. (Демо: отправка на сервер пока не подключена.)";
     note.style.color = "#2f7d55";
     e.target.reset();
   });
