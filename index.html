@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Гармония — девелопер полного цикла. Проектирование, строительство и благоустройство жилых комплексов. Новый проект — ЖК «Гармония 6»." />
+  <title>Гармония — строительство жилых комплексов</title>
+
+  <!--
+    ────────────────────────────────────────────────────────────────
+    Одностраничный сайт строительной компании «Гармония».
+    Всё в одном файле: без сборки, открывается двойным кликом,
+    легко разместить на GitHub Pages / любом хостинге.
+
+    ВАЖНО: тексты и характеристики проекта «Гармония 6» — ЗАГЛУШКИ.
+    Их нужно заменить реальными данными из презентации (PDF).
+    Места для замены помечены комментариями со словом TODO.
+    Данные о проектах вынесены в объект PROJECTS в конце файла (в script-блоке),
+    чтобы их было удобно править в одном месте.
+    ────────────────────────────────────────────────────────────────
+  -->
+
+  <style>
+    :root {
+      --graphite: #16191d;
+      --graphite-2: #1f242a;
+      --ink: #23282e;
+      --paper: #f6f4f0;
+      --paper-2: #efece6;
+      --line: #e2ddd4;
+      --muted: #6b7078;
+      --accent: #c08a34;      /* тёплая бронза */
+      --accent-dark: #a5722450;
+      --accent-soft: #f2e8d7;
+      --white: #ffffff;
+      --radius: 14px;
+      --radius-sm: 9px;
+      --shadow: 0 18px 40px -22px rgba(20, 22, 26, .45);
+      --shadow-sm: 0 6px 20px -12px rgba(20, 22, 26, .35);
+      --maxw: 1180px;
+      --serif: Georgia, "Times New Roman", "PT Serif", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+    /* ── Шапка / навигация по вкладкам ─────────────────────────── */
+    header.site {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(246,244,240,.86);
+      backdrop-filter: saturate(1.4) blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; height: 70px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand .mark {
+      width: 38px; height: 38px; border-radius: 9px; flex: none;
+      background: linear-gradient(135deg, var(--graphite), #33393f);
+      display: grid; place-items: center; color: var(--accent);
+      font-family: var(--serif); font-weight: 700; font-size: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .brand .name { font-family: var(--serif); font-size: 21px; font-weight: 700; letter-spacing: .06em; }
+    .brand .sub { display: block; font-family: var(--sans); font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); margin-top: -2px; }
+
+    .tabs { display: flex; gap: 4px; }
+    .tab-btn {
+      border: 0; background: transparent; color: var(--muted);
+      font-size: 15px; font-weight: 600; padding: 10px 16px; border-radius: 999px;
+      transition: color .2s, background .2s;
+    }
+    .tab-btn:hover { color: var(--ink); }
+    .tab-btn[aria-selected="true"] { color: var(--graphite); background: var(--white); box-shadow: var(--shadow-sm); }
+
+    .nav-cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px;
+      background: var(--graphite); color: #fff; font-weight: 600; font-size: 14px; transition: transform .15s, background .2s; }
+    .nav-cta:hover { background: #000; transform: translateY(-1px); }
+
+    .burger { display: none; border: 1px solid var(--line); background: var(--white); width: 44px; height: 40px; border-radius: 10px; }
+    .burger span, .burger span::before, .burger span::after {
+      content: ""; display: block; width: 18px; height: 2px; background: var(--ink); margin: 0 auto; position: relative; transition: .2s; }
+    .burger span::before { position: absolute; top: -6px; } .burger span::after { position: absolute; top: 6px; }
+
+    /* ── Вкладки-панели ────────────────────────────────────────── */
+    .panel { display: none; animation: fade .35s ease; }
+    .panel.active { display: block; }
+    @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    section { padding: 78px 0; }
+    .eyebrow { display: inline-block; font-size: 12px; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+    h1, h2, h3 { font-family: var(--serif); color: var(--graphite); line-height: 1.15; font-weight: 700; }
+    h2.title { font-size: clamp(28px, 4vw, 42px); margin-bottom: 16px; }
+    .lead { font-size: 18px; color: var(--muted); max-width: 62ch; }
+
+    /* ── Главная / hero ────────────────────────────────────────── */
+    .hero {
+      background:
+        radial-gradient(120% 120% at 100% 0%, rgba(192,138,52,.18), transparent 55%),
+        linear-gradient(180deg, var(--graphite), var(--graphite-2));
+      color: #eef0f2; border-radius: 0 0 28px 28px; overflow: hidden;
+    }
+    .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center;
+      padding-top: 66px; padding-bottom: 74px; }
+    .hero h1 { color: #fff; font-size: clamp(34px, 5vw, 58px); letter-spacing: -.01em; }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero p { color: #c7ccd2; font-size: 19px; margin: 20px 0 30px; max-width: 52ch; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 999px;
+      font-weight: 600; font-size: 15px; border: 1px solid transparent; transition: transform .15s, background .2s, border-color .2s; }
+    .btn-primary { background: var(--accent); color: #201704; }
+    .btn-primary:hover { background: #d59a3e; transform: translateY(-2px); }
+    .btn-ghost { border-color: rgba(255,255,255,.28); color: #fff; }
+    .btn-ghost:hover { border-color: #fff; transform: translateY(-2px); }
+
+    .hero-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius); padding: 6px; box-shadow: var(--shadow);
+    }
+    .hero-visual {
+      border-radius: 10px; height: 340px; position: relative; overflow: hidden;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 44px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 44px),
+        linear-gradient(135deg, #2b3138, #3a424b);
+    }
+    .hero-visual::after {
+      content: "рендер проекта"; position: absolute; inset: auto 0 0 0; padding: 14px 16px;
+      background: linear-gradient(0deg, rgba(0,0,0,.55), transparent); color: #cfd4da;
+      font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+    .hero-visual .badge {
+      position: absolute; top: 14px; left: 14px; background: var(--accent); color: #201704;
+      font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 999px; letter-spacing: .04em; }
+    .hero-visual .g6 { position: absolute; top: 50%; left: 20px; transform: translateY(-60%);
+      font-family: var(--serif); font-size: 46px; color: rgba(255,255,255,.9); }
+
+    /* ── Статистика ────────────────────────────────────────────── */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 42px; }
+    .stat { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); border-radius: var(--radius-sm); padding: 20px; }
+    .stat .n { font-family: var(--serif); font-size: 32px; color: #fff; }
+    .stat .l { color: #aeb4bb; font-size: 13px; margin-top: 2px; }
+
+    /* ── Общие блоки на светлом фоне ───────────────────────────── */
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; margin-top: 40px; }
+    .card {
+      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .card .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--accent-soft); color: var(--accent);
+      display: grid; place-items: center; margin-bottom: 16px; font-size: 22px; }
+    .card h3 { font-size: 20px; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 15px; }
+
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
+    .about-visual { border-radius: var(--radius); height: 420px; box-shadow: var(--shadow); position: relative; overflow: hidden;
+      background:
+        radial-gradient(120% 90% at 0% 0%, rgba(192,138,52,.22), transparent 50%),
+        repeating-linear-gradient(115deg, rgba(0,0,0,.05) 0 2px, transparent 2px 26px),
+        linear-gradient(135deg, #dfd8cc, #cbc2b3); }
+    .about-visual::after { content: "фото объекта / команды"; position: absolute; inset: auto 0 0 0; padding: 12px 16px;
+      color: #5c5648; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; background: linear-gradient(0deg, rgba(255,255,255,.6), transparent); }
+
+    .facts { list-style: none; margin-top: 22px; display: grid; gap: 14px; }
+    .facts li { display: flex; gap: 12px; align-items: flex-start; }
+    .facts .t { color: var(--accent); font-weight: 800; font-size: 18px; line-height: 1.3; }
+    .facts b { display: block; }
+    .facts span { color: var(--muted); font-size: 14px; }
+
+    .band { background: var(--graphite); color: #e7e9ec; border-radius: 24px; margin: 0 auto; }
+    .band .wrap { padding: 60px 40px; }
+    .band h2 { color: #fff; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 34px; counter-reset: s; }
+    .step { padding-top: 18px; border-top: 2px solid rgba(255,255,255,.16); }
+    .step::before { counter-increment: s; content: "0" counter(s); font-family: var(--serif); font-size: 26px; color: var(--accent); }
+    .step h3 { color: #fff; font-size: 18px; margin: 8px 0; }
+    .step p { color: #aab0b7; font-size: 14px; }
+
+    /* ── Проекты ───────────────────────────────────────────────── */
+    .proj-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
+    .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 26px; margin-top: 38px; }
+    .proj {
+      text-align: left; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; padding: 0; }
+    .proj:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .proj .thumb { height: 200px; position: relative;
+      background: repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 40px),
+                  linear-gradient(135deg, #cfd4da, #aeb6bf); }
+    .proj .thumb .g { position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: var(--serif); font-size: 40px; color: rgba(255,255,255,.85); text-shadow: 0 2px 12px rgba(0,0,0,.25); }
+    .proj.featured .thumb { background: linear-gradient(135deg, #2b3138, #454e57); }
+    .status { position: absolute; top: 14px; left: 14px; font-size: 12px; font-weight: 700; letter-spacing: .04em;
+      padding: 6px 12px; border-radius: 999px; background: #fff; color: var(--ink); box-shadow: var(--shadow-sm); }
+    .status.build { background: var(--accent); color: #201704; }
+    .status.done { background: #2f7d55; color: #fff; }
+    .proj .body { padding: 20px 22px 24px; }
+    .proj .body h3 { font-size: 22px; }
+    .proj .meta { color: var(--muted); font-size: 14px; margin: 6px 0 14px; }
+    .proj .more { color: var(--accent); font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+
+    /* ── Контакты ──────────────────────────────────────────────── */
+    .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+    .cinfo { display: grid; gap: 20px; align-content: start; }
+    .cinfo .row { display: flex; gap: 14px; }
+    .cinfo .row .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-soft); color: var(--accent);
+      display: grid; place-items: center; font-size: 20px; flex: none; }
+    .cinfo .row b { display: block; }
+    .cinfo .row span { color: var(--muted); }
+    form.contact-form { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); }
+    form.contact-form label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin: 14px 0 6px; }
+    form.contact-form input, form.contact-form textarea {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 15px; background: var(--paper); }
+    form.contact-form input:focus, form.contact-form textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    form.contact-form button { margin-top: 20px; width: 100%; padding: 14px; border: 0; border-radius: 999px; background: var(--graphite); color: #fff; font-weight: 700; font-size: 15px; }
+    form.contact-form button:hover { background: #000; }
+    .form-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+    /* ── Подвал ────────────────────────────────────────────────── */
+    footer.site { background: var(--graphite); color: #aab0b7; margin-top: 20px; }
+    footer.site .wrap { padding: 40px 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; align-items: center; }
+    footer.site .brand .name, footer.site .brand .mark { color: #fff; }
+    footer.site a:hover { color: #fff; }
+
+    /* ── Модальное окно проекта ────────────────────────────────── */
+    .modal { position: fixed; inset: 0; z-index: 100; display: none; padding: 24px; }
+    .modal.open { display: grid; place-items: center; }
+    .modal .backdrop { position: absolute; inset: 0; background: rgba(16,18,22,.6); backdrop-filter: blur(3px); }
+    .modal .dialog {
+      position: relative; background: var(--paper); border-radius: 18px; max-width: 860px; width: 100%;
+      max-height: 88vh; overflow: auto; box-shadow: var(--shadow); animation: pop .25s ease; }
+    @keyframes pop { from { transform: scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+    .modal .hd { height: 260px; position: relative;
+      background: radial-gradient(120% 120% at 100% 0, rgba(192,138,52,.25), transparent 55%), linear-gradient(135deg, #2b3138, #454e57); }
+    .modal .hd .g { position: absolute; left: 28px; bottom: 22px; font-family: var(--serif); font-size: 40px; color: #fff; }
+    .modal .hd .status { top: 18px; left: 18px; }
+    .modal .close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 0;
+      background: rgba(255,255,255,.92); font-size: 20px; color: var(--ink); z-index: 2; }
+    .modal .content { padding: 28px 30px 34px; }
+    .modal .content h2 { font-size: 30px; }
+    .modal .content .sub { color: var(--muted); margin-bottom: 20px; }
+    .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin: 22px 0; }
+    .spec { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+    .spec .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .spec .v { font-family: var(--serif); font-size: 19px; color: var(--graphite); margin-top: 4px; }
+    .modal .desc p { color: var(--ink); margin-bottom: 12px; }
+    .modal .infra { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .modal .infra li { background: var(--accent-soft); color: #7a5514; font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 999px; }
+    .todo { background: #fff7e8; border: 1px dashed var(--accent); color: #8a6414; font-size: 13px; padding: 10px 14px; border-radius: 10px; margin-top: 18px; }
+
+    /* ── Адаптив ───────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero .wrap, .split, .contact { grid-template-columns: 1fr; }
+      .hero-card { order: -1; }
+      .stats, .steps { grid-template-columns: repeat(2, 1fr); }
+      .tabs { display: none; position: absolute; top: 70px; left: 0; right: 0; flex-direction: column;
+        background: var(--white); border-bottom: 1px solid var(--line); padding: 8px; gap: 4px; }
+      .tabs.show { display: flex; }
+      .tab-btn { text-align: left; }
+      .burger { display: block; }
+      .nav-cta { display: none; }
+    }
+    @media (max-width: 520px) {
+      .stats, .steps { grid-template-columns: 1fr; }
+      section { padding: 54px 0; }
+    }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════ ШАПКА ══════════════════ -->
+  <header class="site">
+    <div class="wrap nav">
+      <a class="brand" href="#" data-tab="home" aria-label="Гармония — на главную">
+        <span class="mark">Г</span>
+        <span><span class="name">ГАРМОНИЯ</span><span class="sub">девелопмент</span></span>
+      </a>
+
+      <nav class="tabs" id="tabs" role="tablist" aria-label="Разделы сайта">
+        <button class="tab-btn" role="tab" data-tab="home" aria-selected="true">Главная</button>
+        <button class="tab-btn" role="tab" data-tab="about" aria-selected="false">О компании</button>
+        <button class="tab-btn" role="tab" data-tab="projects" aria-selected="false">Проекты</button>
+        <button class="tab-btn" role="tab" data-tab="contacts" aria-selected="false">Контакты</button>
+      </nav>
+
+      <a class="nav-cta" data-tab="contacts" href="#">Связаться</a>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ══════════════════ ВКЛАДКА: ГЛАВНАЯ ══════════════════ -->
+    <div class="panel active" id="home" role="tabpanel">
+      <div class="hero">
+        <div class="wrap">
+          <div>
+            <span class="eyebrow">Девелопер полного цикла</span>
+            <h1>Строим дома,<br>в которых хочется <em>жить</em></h1>
+            <!-- TODO: из презентации — уточнить слоган и позиционирование компании -->
+            <p>«Гармония» проектирует и возводит жилые комплексы: от идеи и архитектуры до благоустроенного двора и передачи ключей.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" data-tab="projects" href="#">Смотреть проекты →</a>
+              <a class="btn btn-ghost" data-tab="about" href="#">О компании</a>
+            </div>
+
+            <div class="stats">
+              <!-- TODO: из презентации — реальные цифры компании -->
+              <div class="stat"><div class="n">12</div><div class="l">лет на рынке</div></div>
+              <div class="stat"><div class="n">5</div><div class="l">сданных ЖК</div></div>
+              <div class="stat"><div class="n">320&nbsp;000</div><div class="l">м² построено</div></div>
+              <div class="stat"><div class="n">4&nbsp;800</div><div class="l">семей заселилось</div></div>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <button class="hero-visual" data-project="harmony-6" aria-label="Открыть проект Гармония 6" style="width:100%;border:0;cursor:pointer">
+              <span class="badge">Новый проект</span>
+              <span class="g6">Гармония&nbsp;6</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <section class="wrap">
+        <span class="eyebrow">Что мы делаем</span>
+        <h2 class="title">Полный цикл девелопмента под одной крышей</h2>
+        <p class="lead">Мы отвечаем за проект на каждом этапе — поэтому качество и сроки в наших руках, а не разбросаны между подрядчиками.</p>
+        <div class="grid-cards">
+          <div class="card"><div class="ic">✎</div><h3>Проектирование</h3><p>Архитектура, планировки и инженерия, продуманные под реальный сценарий жизни.</p></div>
+          <div class="card"><div class="ic">▲</div><h3>Строительство</h3><p>Собственные бригады и контроль качества на площадке — от котлована до фасада.</p></div>
+          <div class="card"><div class="ic">❋</div><h3>Благоустройство</h3><p>Дворы без машин, детские и спортивные зоны, озеленение и удобные общественные пространства.</p></div>
+          <div class="card"><div class="ic">◈</div><h3>Сервис и УК</h3><p>Сопровождение после сдачи: гарантия, управляющая компания, забота о жителях.</p></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ══════════════════ ВКЛАДКА: О КОМПАНИИ ══════════════════ -->
+    <div class="panel" id="about" role="tabpanel">
+      <section class="wrap">
+        <div class="split">
+          <div>
+            <span class="eyebrow">О компании</span>
+            <h2 class="title">Создаём среду, в которой хочется оставаться</h2>
+            <!-- TODO: из презентации — реальное описание компании, история, миссия -->
+            <p class="lead">«Гармония» — строительно-девелоперская компания, которая проектирует и возводит комфортное жильё. Мы верим, что дом — это не только квадратные метры, но и двор, свет, воздух и соседи, с которыми приятно жить рядом.</p>
+            <ul class="facts">
+              <li><span class="t">✦</span><div><b>Человекоцентричный подход</b><span>Планировки и дворы проектируем от сценариев жизни людей, а не от таблицы продаж.</span></div></li>
+              <li><span class="t">✦</span><div><b>Ответственность за результат</b><span>Полный цикл — от участка до управляющей компании — держим внутри.</span></div></li>
+              <li><span class="t">✦</span><div><b>Долгосрочное качество</b><span>Материалы и решения, которые остаются актуальными спустя годы.</span></div></li>
+            </ul>
+          </div>
+          <div class="about-visual" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <div class="band">
+        <div class="wrap">
+          <span class="eyebrow">Как мы работаем</span>
+          <h2 class="title">Путь проекта — от идеи до ключей</h2>
+          <div class="steps">
+            <div class="step"><h3>Концепция</h3><p>Анализ участка, аудитория, архитектурная идея и экономика проекта.</p></div>
+            <div class="step"><h3>Проект</h3><p>Рабочая документация, планировки, инженерные и фасадные решения.</p></div>
+            <div class="step"><h3>Стройка</h3><p>Возведение с контролем качества и графика на каждом этапе.</p></div>
+            <div class="step"><h3>Заселение</h3><p>Передача ключей, благоустройство двора и работа управляющей компании.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <section class="wrap">
+        <span class="eyebrow">Почему выбирают нас</span>
+        <h2 class="title">Ценность, которую видно и через годы</h2>
+        <div class="grid-cards">
+          <div class="card"><div class="ic">⧗</div><h3>Сроки</h3><p>Прозрачный график и сдача в срок — обязательства, которые мы соблюдаем.</p></div>
+          <div class="card"><div class="ic">✓</div><h3>Качество</h3><p>Проверенные материалы и технический надзор на всех этапах строительства.</p></div>
+          <div class="card"><div class="ic">☂</div><h3>Двор без машин</h3><p>Безопасное пространство для детей и прогулок, парковка — по периметру и под землёй.</p></div>
+          <div class="card"><div class="ic">₽</div><h3>Прозрачная покупка</h3><p>Эскроу-счета, ипотека и рассрочка, честные условия без скрытых доплат.</p></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ══════════════════ ВКЛАДКА: ПРОЕКТЫ ══════════════════ -->
+    <div class="panel" id="projects" role="tabpanel">
+      <section class="wrap">
+        <div class="proj-head">
+          <div>
+            <span class="eyebrow">Проекты</span>
+            <h2 class="title">Наши жилые комплексы</h2>
+            <p class="lead">Флагманский проект — ЖК «Гармония 6». Ниже — реализованные и строящиеся комплексы компании.</p>
+          </div>
+        </div>
+        <!-- Карточки создаются из объекта PROJECTS (см. <script> внизу). -->
+        <div class="projects" id="projects-grid"></div>
+      </section>
+    </div>
+
+    <!-- ══════════════════ ВКЛАДКА: КОНТАКТЫ ══════════════════ -->
+    <div class="panel" id="contacts" role="tabpanel">
+      <section class="wrap">
+        <span class="eyebrow">Контакты</span>
+        <h2 class="title">Свяжитесь с нами</h2>
+        <p class="lead">Оставьте заявку — расскажем о проекте «Гармония 6», покажем планировки и условия покупки.</p>
+        <div class="contact" style="margin-top:38px">
+          <div class="cinfo">
+            <!-- TODO: из презентации — реальные контакты, адрес, телефон, e-mail -->
+            <div class="row"><span class="ic">☎</span><div><b>+7 (000) 000-00-00</b><span>Ежедневно с 9:00 до 21:00</span></div></div>
+            <div class="row"><span class="ic">✉</span><div><b>sales@garmoniya.example</b><span>Отдел продаж</span></div></div>
+            <div class="row"><span class="ic">⌖</span><div><b>Офис продаж</b><span>г. ______, ул. ______, д. ___</span></div></div>
+            <div class="row"><span class="ic">◫</span><div><b>Мы в соцсетях</b><span>Telegram · VK · YouTube</span></div></div>
+          </div>
+
+          <form class="contact-form" id="lead-form" novalidate>
+            <label for="f-name">Имя</label>
+            <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" required />
+            <label for="f-phone">Телефон</label>
+            <input id="f-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
+            <label for="f-msg">Сообщение</label>
+            <textarea id="f-msg" name="message" rows="3" placeholder="Интересует ЖК «Гармония 6»…"></textarea>
+            <button type="submit">Отправить заявку</button>
+            <p class="form-note" id="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. <!-- TODO: подключить приём заявок к почте/CRM --></p>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ══════════════════ ПОДВАЛ ══════════════════ -->
+  <footer class="site">
+    <div class="wrap">
+      <a class="brand" href="#" data-tab="home">
+        <span class="mark">Г</span>
+        <span><span class="name">ГАРМОНИЯ</span><span class="sub">девелопмент</span></span>
+      </a>
+      <div style="font-size:14px">© <span id="year"></span> ГК «Гармония». Строительство жилых комплексов.</div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════ МОДАЛЬНОЕ ОКНО ПРОЕКТА ══════════════════ -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="backdrop" data-close></div>
+    <div class="dialog">
+      <button class="close" data-close aria-label="Закрыть">✕</button>
+      <div class="hd" id="modal-hd"><span class="status" id="modal-status"></span><span class="g" id="modal-g"></span></div>
+      <div class="content">
+        <h2 id="modal-title"></h2>
+        <div class="sub" id="modal-sub"></div>
+        <div class="specs" id="modal-specs"></div>
+        <div class="desc" id="modal-desc"></div>
+        <ul class="infra" id="modal-infra"></ul>
+        <div class="todo" id="modal-todo">⚠ Характеристики — предварительные заглушки. Заменю реальными данными из презентации «Гармония 6».</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /* ══════════════════════════════════════════════════════════════
+     ДАННЫЕ ПРОЕКТОВ
+     Правьте здесь. Первый — «Гармония 6» (из презентации).
+     Значения помеченные /* TODO * / — заглушки, заменить из PDF.
+     ══════════════════════════════════════════════════════════════ */
+  const PROJECTS = [
+    {
+      id: "harmony-6",
+      name: "Гармония 6",
+      featured: true,
+      status: "Строится",           // TODO: из презентации
+      statusType: "build",           // build | done
+      meta: "Флагманский проект · срок сдачи — уточняется",
+      sub: "Новый жилой комплекс комфорт-класса от компании «Гармония».", // TODO
+      specs: [                       // TODO: все значения — из презентации
+        { k: "Класс жилья", v: "Комфорт+" },
+        { k: "Этажность", v: "— этажей" },
+        { k: "Квартиры", v: "студии – 3к" },
+        { k: "Площадь", v: "от __ м²" },
+        { k: "Срок сдачи", v: "__ кв. 20__" },
+        { k: "Расположение", v: "г. ______" }
+      ],
+      desc: [
+        "Здесь появится описание проекта «Гармония 6» из презентации: концепция, архитектура, преимущества расположения и двора.",
+        "Пока это текст-заглушка — пришлите PDF, и я заменю его реальным содержанием и характеристиками."
+      ],
+      infra: ["Двор без машин", "Детские площадки", "Подземный паркинг", "Коммерция на 1 этаже", "Озеленение"], // TODO
+      showTodo: true
+    },
+    {
+      id: "harmony-5", name: "Гармония 5", status: "Сдан", statusType: "done",
+      meta: "Реализованный проект", sub: "Жилой комплекс компании «Гармония».",
+      specs: [ { k: "Статус", v: "Заселён" }, { k: "Класс", v: "Комфорт" } ],
+      desc: ["Описание проекта появится после уточнения данных."], infra: [], showTodo: true
+    },
+    {
+      id: "harmony-4", name: "Гармония 4", status: "Сдан", statusType: "done",
+      meta: "Реализованный проект", sub: "Жилой комплекс компании «Гармония».",
+      specs: [ { k: "Статус", v: "Заселён" }, { k: "Класс", v: "Комфорт" } ],
+      desc: ["Описание проекта появится после уточнения данных."], infra: [], showTodo: true
+    },
+    {
+      id: "harmony-3", name: "Гармония 3", status: "Сдан", statusType: "done",
+      meta: "Реализованный проект", sub: "Жилой комплекс компании «Гармония».",
+      specs: [ { k: "Статус", v: "Заселён" }, { k: "Класс", v: "Комфорт" } ],
+      desc: ["Описание проекта появится после уточнения данных."], infra: [], showTodo: true
+    }
+  ];
+
+  /* ── Отрисовка карточек проектов ─────────────────────────────── */
+  const grid = document.getElementById("projects-grid");
+  grid.innerHTML = PROJECTS.map(p => `
+    <button class="proj ${p.featured ? "featured" : ""}" data-project="${p.id}" aria-label="Открыть проект ${p.name}">
+      <div class="thumb"><span class="status ${p.statusType}">${p.status}</span><span class="g">${p.name}</span></div>
+      <div class="body">
+        <h3>${p.name}</h3>
+        <div class="meta">${p.meta}</div>
+        <span class="more">Подробнее →</span>
+      </div>
+    </button>`).join("");
+
+  /* ── Переключение вкладок ────────────────────────────────────── */
+  const panels = document.querySelectorAll(".panel");
+  const tabBtns = document.querySelectorAll(".tab-btn");
+  function openTab(id) {
+    if (!document.getElementById(id)) id = "home";
+    panels.forEach(p => p.classList.toggle("active", p.id === id));
+    tabBtns.forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === id)));
+    if (location.hash.slice(1) !== id) history.replaceState(null, "", "#" + id);
+    document.getElementById("tabs").classList.remove("show");
+    document.getElementById("burger").setAttribute("aria-expanded", "false");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  // Любой элемент с data-tab переключает вкладку
+  document.addEventListener("click", e => {
+    const t = e.target.closest("[data-tab]");
+    if (t) { e.preventDefault(); openTab(t.dataset.tab); }
+  });
+  // Клавиатурная навигация по вкладкам
+  document.getElementById("tabs").addEventListener("keydown", e => {
+    const btns = [...tabBtns];
+    const i = btns.indexOf(document.activeElement);
+    if (i < 0) return;
+    if (e.key === "ArrowRight") { e.preventDefault(); btns[(i + 1) % btns.length].focus(); }
+    if (e.key === "ArrowLeft")  { e.preventDefault(); btns[(i - 1 + btns.length) % btns.length].focus(); }
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openTab(document.activeElement.dataset.tab); }
+  });
+
+  /* ── Бургер-меню (мобильное) ─────────────────────────────────── */
+  document.getElementById("burger").addEventListener("click", () => {
+    const tabs = document.getElementById("tabs");
+    const open = tabs.classList.toggle("show");
+    document.getElementById("burger").setAttribute("aria-expanded", String(open));
+  });
+
+  /* ── Модальное окно проекта ──────────────────────────────────── */
+  const modal = document.getElementById("modal");
+  function openProject(id) {
+    const p = PROJECTS.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById("modal-title").textContent = "ЖК «" + p.name + "»";
+    document.getElementById("modal-sub").textContent = p.sub || "";
+    document.getElementById("modal-g").textContent = p.name;
+    const st = document.getElementById("modal-status");
+    st.textContent = p.status; st.className = "status " + p.statusType;
+    document.getElementById("modal-specs").innerHTML = (p.specs || [])
+      .map(s => `<div class="spec"><div class="k">${s.k}</div><div class="v">${s.v}</div></div>`).join("");
+    document.getElementById("modal-desc").innerHTML = (p.desc || []).map(d => `<p>${d}</p>`).join("");
+    const infra = document.getElementById("modal-infra");
+    infra.innerHTML = (p.infra || []).map(i => `<li>${i}</li>`).join("");
+    infra.style.display = (p.infra && p.infra.length) ? "flex" : "none";
+    document.getElementById("modal-todo").style.display = p.showTodo ? "block" : "none";
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    modal.querySelector(".close").focus();
+  }
+  function closeModal() { modal.classList.remove("open"); document.body.style.overflow = ""; }
+  document.addEventListener("click", e => {
+    const opener = e.target.closest("[data-project]");
+    if (opener) { e.preventDefault(); openProject(opener.dataset.project); }
+    if (e.target.closest("[data-close]")) closeModal();
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+  /* ── Форма заявки (заглушка) ─────────────────────────────────── */
+  document.getElementById("lead-form").addEventListener("submit", e => {
+    e.preventDefault();
+    const note = document.getElementById("form-note");
+    note.textContent = "Спасибо! Заявка получена — мы свяжемся с вами. (Демо: отправка на сервер пока не подключена.)";
+    note.style.color = "#2f7d55";
+    e.target.reset();
+  });
+
+  /* ── Инициализация ───────────────────────────────────────────── */
+  document.getElementById("year").textContent = new Date().getFullYear();
+  openTab(location.hash.slice(1) || "home");
+  </script>
+</body>
+</html>
