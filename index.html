@@ -257,18 +257,20 @@
     .quick { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
     .quick .btn { padding: 12px 22px; font-size: 14px; }
     .cinfo-note { color: var(--muted); font-size: 14px; margin-top: 2px; }
-    .btn-wa { background: #25d366; color: #08351c; }
-    .btn-wa:hover { background: #1ebe5b; transform: translateY(-2px); }
-    .modal-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
-    form.contact-form { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); }
-    form.contact-form label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin: 14px 0 6px; }
-    form.contact-form input, form.contact-form textarea, form.contact-form select {
-      width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 15px; background: var(--paper); color: var(--ink); }
-    form.contact-form input:focus, form.contact-form textarea:focus, form.contact-form select:focus { outline: 2px solid var(--accent); border-color: transparent; }
-    form.contact-form label .opt { color: var(--muted); font-weight: 400; }
-    form.contact-form button { margin-top: 20px; width: 100%; padding: 14px; border: 0; border-radius: 999px; background: var(--graphite); color: #fff; font-weight: 700; font-size: 15px; }
-    form.contact-form button:hover { background: #000; }
-    .form-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+    /* Карточка с телефоном — главный способ связи */
+    .phone-card {
+      background:
+        radial-gradient(120% 120% at 100% 0%, rgba(192,138,52,.18), transparent 55%),
+        linear-gradient(160deg, var(--forest), var(--forest-2));
+      color: #eef0f2; border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; align-items: flex-start; }
+    .phone-label { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+    .phone-num { font-family: var(--serif); font-size: clamp(30px, 5vw, 44px); color: #fff; margin: 10px 0 6px; letter-spacing: .01em; }
+    .phone-sub { color: #b9c2ba; font-size: 14px; margin-bottom: 24px; }
+    .phone-card .quick { margin-top: auto; }
+    .modal-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
+    .modal-phone { color: var(--muted); font-size: 15px; }
+    .modal-phone a { color: var(--graphite); font-weight: 700; white-space: nowrap; }
 
     /* ── Подвал ────────────────────────────────────────────────── */
     footer.site { background: var(--graphite); color: #aab0b7; margin-top: 20px; }
@@ -508,35 +510,19 @@
         <h2 class="title">Запишитесь на индивидуальную презентацию</h2>
         <p class="lead">Проведём личную презентацию прямо на территории посёлка: покажем генеральный план, участки и проекты домов.</p>
         <div class="contact" style="margin-top:38px">
-          <div class="cinfo">
-            <div class="row"><span class="ic">☎</span><div><b><a href="tel:+79039143490">+7 903 914 34 90</a></b><span>Позвоните или напишите — запишем на показ</span></div></div>
-            <div class="row"><span class="ic">⌖</span><div><b>Как добраться</b><span>Томская область, Зоркальцевское сельское поселение, д. Петровский участок, мкрн. Героя ВОВ А.П. Дмитриева</span></div></div>
-            <div class="row"><span class="ic">❋</span><div><b>Показ на территории посёлка</b><span>В 10 минутах от центра Томска, юго-восток Томского района, рядом с с. Зоркальцево</span></div></div>
+          <div class="phone-card">
+            <span class="phone-label">Звоните или пишите</span>
+            <a class="phone-num" href="tel:+79039143490">+7 903 914 34 90</a>
+            <span class="phone-sub">Звонок, WhatsApp или Telegram — как вам удобно</span>
             <div class="quick">
               <a class="btn btn-primary" href="tel:+79039143490">☎ Позвонить</a>
-              <a class="btn btn-wa" href="https://wa.me/79039143490" target="_blank" rel="noopener">Написать в WhatsApp</a>
             </div>
-            <p class="cinfo-note">Ответим на звонок или в мессенджере, подберём проект дома и подходящий участок и согласуем время показа.</p>
           </div>
-
-          <form class="contact-form" id="lead-form" novalidate>
-            <label for="f-name">Имя</label>
-            <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" required />
-            <label for="f-phone">Телефон</label>
-            <input id="f-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
-            <label for="f-project">Что интересует</label>
-            <select id="f-project" name="project">
-              <option value="Весь посёлок «Гармония»">Весь посёлок «Гармония»</option>
-              <option value="Дом «Призма» — 146 м²">Дом «Призма» — 146 м²</option>
-              <option value="Дом «Панорама» — 158 м²">Дом «Панорама» — 158 м²</option>
-              <option value="Дом «Ракурс» — 169 м²">Дом «Ракурс» — 169 м²</option>
-              <option value="Дом «Виста» — 199 м²">Дом «Виста» — 199 м²</option>
-            </select>
-            <label for="f-msg">Сообщение <span class="opt">(необязательно)</span></label>
-            <textarea id="f-msg" name="message" rows="3" placeholder="Удобное время для показа, вопросы по проекту…"></textarea>
-            <button type="submit">Записаться на просмотр</button>
-            <p class="form-note" id="form-note">Заявка уйдёт в WhatsApp менеджеру — ответим и согласуем показ. Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
-          </form>
+          <div class="cinfo">
+            <div class="row"><span class="ic">⌖</span><div><b>Как добраться</b><span>Томская область, Зоркальцевское сельское поселение, д. Петровский участок, мкрн. Героя ВОВ А.П. Дмитриева</span></div></div>
+            <div class="row"><span class="ic">❋</span><div><b>Показ на территории посёлка</b><span>В 10 минутах от центра Томска, юго-восток Томского района, рядом с с. Зоркальцево</span></div></div>
+            <p class="cinfo-note">Позвоните или напишите в удобном мессенджере — подберём проект дома и участок и согласуем время показа прямо на территории посёлка.</p>
+          </div>
         </div>
       </section>
     </div>
@@ -568,7 +554,7 @@
         <ul class="infra" id="modal-infra"></ul>
         <div class="modal-actions">
           <button class="btn btn-primary" id="modal-cta" type="button">Записаться на просмотр →</button>
-          <a class="btn btn-wa" id="modal-wa" href="#" target="_blank" rel="noopener">Спросить в WhatsApp</a>
+          <span class="modal-phone">или звоните: <a href="tel:+79039143490">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a></span>
         </div>
       </div>
     </div>
@@ -715,15 +701,10 @@
   });
 
   /* ── Модальное окно проекта дома ─────────────────────────────── */
-  const SELLER_WA = "79039143490";     // телефон менеджера для заявок в WhatsApp
   const modal = document.getElementById("modal");
-  let currentProject = null;
   function openProject(id) {
     const p = PROJECTS.find(x => x.id === id);
     if (!p) return;
-    currentProject = p;
-    const waText = "Здравствуйте! Интересует дом «" + p.name + "» (" + p.status + ") в посёлке «Гармония». Можно записаться на просмотр?";
-    document.getElementById("modal-wa").href = "https://wa.me/" + SELLER_WA + "?text=" + encodeURIComponent(waText);
     document.getElementById("modal-title").textContent = "Проект «" + p.name + "»";
     document.getElementById("modal-sub").textContent = p.sub || "";
     document.getElementById("modal-g").textContent = p.name;
@@ -749,48 +730,8 @@
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-  /* ── Записаться на просмотр конкретного дома ─────────────────── */
-  function bookViewing(p) {
-    const sel = document.getElementById("f-project");
-    if (p && sel) {
-      const opt = [...sel.options].find(o => o.value.indexOf(p.name) !== -1);
-      if (opt) sel.value = opt.value;
-    }
-    closeModal();
-    openTab("contacts");
-    setTimeout(() => document.getElementById("f-name").focus(), 350);
-  }
-  document.getElementById("modal-cta").addEventListener("click", () => bookViewing(currentProject));
-
-  /* ── Форма заявки → отправка в WhatsApp менеджеру ────────────── */
-  function esc(s) { return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
-  document.getElementById("lead-form").addEventListener("submit", e => {
-    e.preventDefault();
-    const name = document.getElementById("f-name").value.trim();
-    const phone = document.getElementById("f-phone").value.trim();
-    const project = document.getElementById("f-project").value;
-    const message = document.getElementById("f-msg").value.trim();
-    const note = document.getElementById("form-note");
-    if (!name || !phone) {
-      note.textContent = "Пожалуйста, укажите имя и телефон — так менеджер сможет с вами связаться.";
-      note.style.color = "#b4462f";
-      return;
-    }
-    const lines = [
-      "Здравствуйте! Хочу записаться на просмотр в посёлке «Гармония».",
-      "Имя: " + name,
-      "Телефон: " + phone,
-      "Интересует: " + project
-    ];
-    if (message) lines.push("Сообщение: " + message);
-    const url = "https://wa.me/" + SELLER_WA + "?text=" + encodeURIComponent(lines.join("\n"));
-    window.open(url, "_blank", "noopener");
-    note.innerHTML = "Спасибо, " + esc(name) + "! Открываем WhatsApp с вашей заявкой. " +
-      "Если не открылось — <a href=\"" + url + "\" target=\"_blank\" rel=\"noopener\">нажмите здесь</a> " +
-      "или позвоните <a href=\"tel:+79039143490\">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a>.";
-    note.style.color = "#2f7d55";
-    e.target.reset();
-  });
+  /* ── «Записаться на просмотр» → к контактам с номером ────────── */
+  document.getElementById("modal-cta").addEventListener("click", () => { closeModal(); openTab("contacts"); });
 
   /* ── Инициализация ───────────────────────────────────────────── */
   document.getElementById("year").textContent = new Date().getFullYear();
