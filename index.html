@@ -541,7 +541,7 @@
             <label for="f-msg">Сообщение <span class="opt">(необязательно)</span></label>
             <textarea id="f-msg" name="message" rows="3" placeholder="Удобное время для показа, вопросы по проекту…"></textarea>
             <button type="submit">Отправить заявку</button>
-            <p class="form-note" id="form-note">Заявка откроется в WhatsApp менеджеру. Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+            <p class="form-note" id="form-note">Заявка придёт на почту менеджеру. Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
           </form>
         </div>
       </section>
@@ -725,7 +725,6 @@
   });
 
   /* ── Модальное окно проекта дома ─────────────────────────────── */
-  const SELLER_WA = "79039143490";     // номер менеджера для заявок в WhatsApp
   const modal = document.getElementById("modal");
   let currentProject = null;
   function openProject(id) {
@@ -772,34 +771,56 @@
   }
   document.getElementById("modal-cta").addEventListener("click", () => bookViewing(currentProject));
 
-  /* ── Форма заявки → отправка менеджеру в WhatsApp ────────────── */
-  function esc(s) { return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
-  document.getElementById("lead-form").addEventListener("submit", e => {
+  /* ── Форма заявки → отправка на почту менеджера (Web3Forms) ────
+     Бесплатный ключ: https://web3forms.com — введите свою почту, ключ
+     придёт письмом. Вставьте его в WEB3FORMS_KEY ниже: заявки будут
+     приходить на эту почту. В коде виден только ключ, сам адрес — нет. */
+  const WEB3FORMS_KEY = "ВСТАВЬТЕ-КЛЮЧ-WEB3FORMS";
+  document.getElementById("lead-form").addEventListener("submit", async e => {
     e.preventDefault();
     const name = document.getElementById("f-name").value.trim();
     const phone = document.getElementById("f-phone").value.trim();
     const project = document.getElementById("f-project").value;
     const message = document.getElementById("f-msg").value.trim();
     const note = document.getElementById("form-note");
+    const btn = e.target.querySelector("button[type=submit]");
     if (!name || !phone) {
       note.textContent = "Пожалуйста, укажите имя и телефон — так менеджер сможет с вами связаться.";
       note.style.color = "#b4462f";
       return;
     }
-    const lines = [
-      "Здравствуйте! Заявка с сайта посёлка «Гармония».",
-      "Имя: " + name,
-      "Телефон: " + phone,
-      "Интересует: " + project
-    ];
-    if (message) lines.push("Сообщение: " + message);
-    const url = "https://wa.me/" + SELLER_WA + "?text=" + encodeURIComponent(lines.join("\n"));
-    window.open(url, "_blank", "noopener");
-    note.innerHTML = "Спасибо, " + esc(name) + "! Заявка открывается в WhatsApp менеджеру. " +
-      "Если окно не открылось — <a href=\"" + url + "\" target=\"_blank\" rel=\"noopener\">нажмите здесь</a> " +
-      "или позвоните <a href=\"tel:+79039143490\">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a>.";
-    note.style.color = "#2f7d55";
-    e.target.reset();
+    if (WEB3FORMS_KEY.indexOf("ВСТАВЬТЕ") !== -1) {
+      note.innerHTML = "Отправка на почту ещё не подключена (нужно вставить ключ Web3Forms). " +
+        "Пока позвоните или напишите: <a href=\"tel:+79039143490\">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a>.";
+      note.style.color = "#b4462f";
+      return;
+    }
+    const original = btn.textContent;
+    btn.disabled = true; btn.textContent = "Отправляем…";
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: "Заявка с сайта посёлка «Гармония»",
+          from_name: "Сайт «Гармония»",
+          "Имя": name, "Телефон": phone, "Интересует": project, "Сообщение": message || "—"
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        note.textContent = "Спасибо, " + name + "! Заявка отправлена — менеджер свяжется с вами.";
+        note.style.color = "#2f7d55";
+        e.target.reset();
+      } else { throw new Error(data.message || "error"); }
+    } catch (err) {
+      note.innerHTML = "Не удалось отправить онлайн. Позвоните или напишите: " +
+        "<a href=\"tel:+79039143490\">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a>.";
+      note.style.color = "#b4462f";
+    } finally {
+      btn.disabled = false; btn.textContent = original;
+    }
   });
 
   /* ── Инициализация ───────────────────────────────────────────── */
