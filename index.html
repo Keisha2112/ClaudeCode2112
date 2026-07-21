@@ -258,6 +258,19 @@
     .modal-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
     .modal-phone { color: var(--muted); font-size: 15px; }
     .modal-phone a { color: var(--graphite); font-weight: 700; white-space: nowrap; }
+    /* Контакты: колонка «телефон + инфо» и форма заявки */
+    .cinfo-col { display: grid; gap: 24px; align-content: start; }
+    form.contact-form { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); align-self: start; }
+    form.contact-form .form-title { font-size: 21px; }
+    form.contact-form .form-sub { color: var(--muted); font-size: 14px; margin: 4px 0 6px; }
+    form.contact-form label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin: 14px 0 6px; }
+    form.contact-form label .opt { color: var(--muted); font-weight: 400; }
+    form.contact-form input, form.contact-form textarea, form.contact-form select {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 15px; background: var(--paper); color: var(--ink); }
+    form.contact-form input:focus, form.contact-form textarea:focus, form.contact-form select:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    form.contact-form button { margin-top: 20px; width: 100%; padding: 14px; border: 0; border-radius: 999px; background: var(--graphite); color: #fff; font-weight: 700; font-size: 15px; }
+    form.contact-form button:hover { background: #000; }
+    .form-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
 
     /* ── Подвал ────────────────────────────────────────────────── */
     footer.site { background: var(--graphite); color: #aab0b7; margin-top: 20px; }
@@ -495,19 +508,41 @@
         <h2 class="title">Запишитесь на индивидуальную презентацию</h2>
         <p class="lead">Проведём личную презентацию прямо на территории посёлка: покажем генеральный план, участки и проекты домов.</p>
         <div class="contact" style="margin-top:38px">
-          <div class="phone-card">
-            <span class="phone-label">Звоните или пишите</span>
-            <a class="phone-num" href="tel:+79039143490">+7 903 914 34 90</a>
-            <span class="phone-sub">Звонок, WhatsApp или Telegram — как вам удобно</span>
-            <div class="quick">
-              <a class="btn btn-primary" href="tel:+79039143490">☎ Позвонить</a>
+          <div class="cinfo-col">
+            <div class="phone-card">
+              <span class="phone-label">Звоните или пишите</span>
+              <a class="phone-num" href="tel:+79039143490">+7 903 914 34 90</a>
+              <span class="phone-sub">Звонок, WhatsApp или Telegram — как вам удобно</span>
+              <div class="quick">
+                <a class="btn btn-primary" href="tel:+79039143490">☎ Позвонить</a>
+              </div>
+            </div>
+            <div class="cinfo">
+              <div class="row"><span class="ic">⌖</span><div><b>Как добраться</b><span>Томская область, Зоркальцевское сельское поселение, д. Петровский участок, мкрн. Героя ВОВ А.П. Дмитриева</span></div></div>
+              <div class="row"><span class="ic">❋</span><div><b>Показ на территории посёлка</b><span>В 10 минутах от центра Томска, юго-восток Томского района, рядом с с. Зоркальцево</span></div></div>
             </div>
           </div>
-          <div class="cinfo">
-            <div class="row"><span class="ic">⌖</span><div><b>Как добраться</b><span>Томская область, Зоркальцевское сельское поселение, д. Петровский участок, мкрн. Героя ВОВ А.П. Дмитриева</span></div></div>
-            <div class="row"><span class="ic">❋</span><div><b>Показ на территории посёлка</b><span>В 10 минутах от центра Томска, юго-восток Томского района, рядом с с. Зоркальцево</span></div></div>
-            <p class="cinfo-note">Позвоните или напишите в удобном мессенджере — подберём проект дома и участок и согласуем время показа прямо на территории посёлка.</p>
-          </div>
+
+          <form class="contact-form" id="lead-form" novalidate>
+            <h3 class="form-title">Оставить заявку</h3>
+            <p class="form-sub">Заполните — менеджер свяжется с вами, ответит на вопросы и запишет на показ.</p>
+            <label for="f-name">Имя</label>
+            <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" required />
+            <label for="f-phone">Ваш телефон</label>
+            <input id="f-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
+            <label for="f-project">Что интересует</label>
+            <select id="f-project" name="project">
+              <option value="Весь посёлок «Гармония»">Весь посёлок «Гармония»</option>
+              <option value="Дом «Призма» — 146 м²">Дом «Призма» — 146 м²</option>
+              <option value="Дом «Панорама» — 158 м²">Дом «Панорама» — 158 м²</option>
+              <option value="Дом «Ракурс» — 169 м²">Дом «Ракурс» — 169 м²</option>
+              <option value="Дом «Виста» — 199 м²">Дом «Виста» — 199 м²</option>
+            </select>
+            <label for="f-msg">Сообщение <span class="opt">(необязательно)</span></label>
+            <textarea id="f-msg" name="message" rows="3" placeholder="Удобное время для показа, вопросы по проекту…"></textarea>
+            <button type="submit">Отправить заявку</button>
+            <p class="form-note" id="form-note">Заявка придёт на почту менеджеру. Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+          </form>
         </div>
       </section>
     </div>
@@ -691,9 +726,11 @@
 
   /* ── Модальное окно проекта дома ─────────────────────────────── */
   const modal = document.getElementById("modal");
+  let currentProject = null;
   function openProject(id) {
     const p = PROJECTS.find(x => x.id === id);
     if (!p) return;
+    currentProject = p;
     document.getElementById("modal-hd").style.backgroundImage =
       "linear-gradient(0deg, rgba(16,18,20,.62), rgba(16,18,20,.05) 45%), url('" + p.img + "')";
     document.getElementById("modal-title").textContent = "Проект «" + p.name + "»";
@@ -721,8 +758,70 @@
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-  /* ── «Записаться на просмотр» → к контактам с номером ────────── */
-  document.getElementById("modal-cta").addEventListener("click", () => { closeModal(); openTab("contacts"); });
+  /* ── «Записаться на просмотр» → форма с выбранным домом ──────── */
+  function bookViewing(p) {
+    const sel = document.getElementById("f-project");
+    if (p && sel) {
+      const opt = [...sel.options].find(o => o.value.indexOf(p.name) !== -1);
+      if (opt) sel.value = opt.value;
+    }
+    closeModal();
+    openTab("contacts");
+    setTimeout(() => document.getElementById("f-name").focus(), 350);
+  }
+  document.getElementById("modal-cta").addEventListener("click", () => bookViewing(currentProject));
+
+  /* ── Форма заявки → отправка на почту менеджера (Web3Forms) ────
+     Бесплатный ключ: https://web3forms.com — введите свою почту, ключ
+     придёт письмом. Вставьте его в WEB3FORMS_KEY ниже: заявки будут
+     приходить на эту почту. В коде виден только ключ, сам адрес — нет. */
+  const WEB3FORMS_KEY = "ВСТАВЬТЕ-КЛЮЧ-WEB3FORMS";
+  document.getElementById("lead-form").addEventListener("submit", async e => {
+    e.preventDefault();
+    const name = document.getElementById("f-name").value.trim();
+    const phone = document.getElementById("f-phone").value.trim();
+    const project = document.getElementById("f-project").value;
+    const message = document.getElementById("f-msg").value.trim();
+    const note = document.getElementById("form-note");
+    const btn = e.target.querySelector("button[type=submit]");
+    if (!name || !phone) {
+      note.textContent = "Пожалуйста, укажите имя и телефон — так менеджер сможет с вами связаться.";
+      note.style.color = "#b4462f";
+      return;
+    }
+    if (WEB3FORMS_KEY.indexOf("ВСТАВЬТЕ") !== -1) {
+      note.innerHTML = "Отправка на почту ещё не подключена (нужно вставить ключ Web3Forms). " +
+        "Пока позвоните или напишите: <a href=\"tel:+79039143490\">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a>.";
+      note.style.color = "#b4462f";
+      return;
+    }
+    const original = btn.textContent;
+    btn.disabled = true; btn.textContent = "Отправляем…";
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: "Заявка с сайта посёлка «Гармония»",
+          from_name: "Сайт «Гармония»",
+          "Имя": name, "Телефон": phone, "Интересует": project, "Сообщение": message || "—"
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        note.textContent = "Спасибо, " + name + "! Заявка отправлена — менеджер свяжется с вами.";
+        note.style.color = "#2f7d55";
+        e.target.reset();
+      } else { throw new Error(data.message || "error"); }
+    } catch (err) {
+      note.innerHTML = "Не удалось отправить онлайн. Позвоните или напишите: " +
+        "<a href=\"tel:+79039143490\">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a>.";
+      note.style.color = "#b4462f";
+    } finally {
+      btn.disabled = false; btn.textContent = original;
+    }
+  });
 
   /* ── Инициализация ───────────────────────────────────────────── */
   document.getElementById("year").textContent = new Date().getFullYear();
