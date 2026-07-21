@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Клубный коттеджный посёлок «Гармония» в 10 минутах от Томска: 57 домовладений в едином стиле хай-тек, участки от 6 до 11 соток, 3 проекта домов. В шаге от города, в единении с природой." />
+  <meta name="description" content="Клубный коттеджный посёлок «Гармония» в 10 минутах от Томска: 57 домовладений в едином стиле хай-тек, участки от 6 до 11 соток, 4 проекта домов. В шаге от города, в единении с природой." />
   <title>Гармония — клубный коттеджный посёлок в 10 минутах от Томска</title>
 
   <!--
@@ -71,12 +71,12 @@
     }
     .brand { display: flex; align-items: center; gap: 12px; }
     .brand .mark {
-      width: 38px; height: 38px; border-radius: 9px; flex: none;
+      width: 38px; height: 38px; border-radius: 10px; flex: none;
       background: linear-gradient(135deg, var(--graphite), #33393f);
-      display: grid; place-items: center; color: var(--accent);
-      font-family: var(--serif); font-weight: 700; font-size: 20px;
+      display: grid; place-items: center;
       box-shadow: var(--shadow-sm);
     }
+    .brand .mark-svg { width: 24px; height: 24px; display: block; }
     .brand .name { font-family: var(--serif); font-size: 21px; font-weight: 700; letter-spacing: .06em; }
     .brand .sub { display: block; font-family: var(--sans); font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); margin-top: -2px; }
 
@@ -254,14 +254,23 @@
       display: grid; place-items: center; font-size: 20px; flex: none; }
     .cinfo .row b { display: block; }
     .cinfo .row span { color: var(--muted); }
-    form.contact-form { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); }
-    form.contact-form label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin: 14px 0 6px; }
-    form.contact-form input, form.contact-form textarea {
-      width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 15px; background: var(--paper); }
-    form.contact-form input:focus, form.contact-form textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
-    form.contact-form button { margin-top: 20px; width: 100%; padding: 14px; border: 0; border-radius: 999px; background: var(--graphite); color: #fff; font-weight: 700; font-size: 15px; }
-    form.contact-form button:hover { background: #000; }
-    .form-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+    .quick { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+    .quick .btn { padding: 12px 22px; font-size: 14px; }
+    .cinfo-note { color: var(--muted); font-size: 14px; margin-top: 2px; }
+    /* Карточка с телефоном — главный способ связи */
+    .phone-card {
+      background:
+        radial-gradient(120% 120% at 100% 0%, rgba(192,138,52,.18), transparent 55%),
+        linear-gradient(160deg, var(--forest), var(--forest-2));
+      color: #eef0f2; border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; align-items: flex-start; }
+    .phone-label { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+    .phone-num { font-family: var(--serif); font-size: clamp(30px, 5vw, 44px); color: #fff; margin: 10px 0 6px; letter-spacing: .01em; }
+    .phone-sub { color: #b9c2ba; font-size: 14px; margin-bottom: 24px; }
+    .phone-card .quick { margin-top: auto; }
+    .modal-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
+    .modal-phone { color: var(--muted); font-size: 15px; }
+    .modal-phone a { color: var(--graphite); font-weight: 700; white-space: nowrap; }
 
     /* ── Подвал ────────────────────────────────────────────────── */
     footer.site { background: var(--graphite); color: #aab0b7; margin-top: 20px; }
@@ -318,11 +327,33 @@
 </head>
 <body>
 
+  <!-- ══════════════════ ЛОГОТИП (SVG-спрайт) ══════════════════
+       Органичный знак: молодой побег с двумя листьями — природа
+       и рост. Используется в шапке и подвале через <use>. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="leafgrad" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#5f8f43"/>
+        <stop offset="1" stop-color="#cf9a40"/>
+      </linearGradient>
+    </defs>
+    <symbol id="brand-leaf" viewBox="0 0 32 32">
+      <!-- стебель -->
+      <path d="M16 29 C 15.2 23, 15.4 17, 17.4 10.5" fill="none" stroke="#cf9a40" stroke-width="1.7" stroke-linecap="round"/>
+      <!-- верхний лист (бронза) -->
+      <path d="M17.4 10.8 C 19 6, 22.6 3.6, 22 2 C 18.2 2.4, 15.6 5.6, 17.4 10.8 Z" fill="url(#leafgrad)"/>
+      <!-- левый лист (зелёный) -->
+      <path d="M15.6 17.6 C 10.8 16.2, 7.4 17.6, 6.6 15.2 C 9.6 12.2, 14 13, 15.6 17.6 Z" fill="#5f8f43"/>
+      <!-- правый лист (зелёный, светлее) -->
+      <path d="M16 13.4 C 20.4 12.2, 24 13.6, 25 11.2 C 22 8.2, 17.6 9, 16 13.4 Z" fill="#6f9e4e"/>
+    </symbol>
+  </svg>
+
   <!-- ══════════════════ ШАПКА ══════════════════ -->
   <header class="site">
     <div class="wrap nav">
       <a class="brand" href="#" data-tab="home" aria-label="Гармония — на главную">
-        <span class="mark">Г</span>
+        <span class="mark"><svg class="mark-svg" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="#brand-leaf"/></svg></span>
         <span><span class="name">ГАРМОНИЯ</span><span class="sub">клубный посёлок</span></span>
       </a>
 
@@ -355,7 +386,7 @@
             <div class="stats">
               <div class="stat"><div class="n">6,2</div><div class="l">гектара — площадь посёлка</div></div>
               <div class="stat"><div class="n">57</div><div class="l">домовладений</div></div>
-              <div class="stat"><div class="n">3</div><div class="l">проекта домов</div></div>
+              <div class="stat"><div class="n">4</div><div class="l">проекта домов</div></div>
               <div class="stat"><div class="n">10</div><div class="l">минут до Томска</div></div>
             </div>
           </div>
@@ -447,8 +478,8 @@
         <div class="proj-head">
           <div>
             <span class="eyebrow">Проекты домов</span>
-            <h2 class="title">Три проекта в едином стиле хай-тек</h2>
-            <p class="lead">В посёлке — 57 домовладений на участках от 6 до 11 соток. Выберите проект дома и посмотрите характеристики и планировку.</p>
+            <h2 class="title">Четыре проекта в едином стиле хай-тек</h2>
+            <p class="lead">В посёлке — 57 домовладений на участках от 6 до 11 соток. Выберите проект дома, посмотрите характеристики и планировку — и запишитесь на просмотр.</p>
           </div>
         </div>
 
@@ -460,7 +491,7 @@
             <div class="vstats">
               <div class="vstat"><div class="n">6,2 га</div><div class="l">площадь посёлка</div></div>
               <div class="vstat"><div class="n">57</div><div class="l">домовладений</div></div>
-              <div class="vstat"><div class="n">3</div><div class="l">проекта домов</div></div>
+              <div class="vstat"><div class="n">4</div><div class="l">проекта домов</div></div>
               <div class="vstat"><div class="n">6–11 сот.</div><div class="l">земельные участки</div></div>
             </div>
           </div>
@@ -479,22 +510,19 @@
         <h2 class="title">Запишитесь на индивидуальную презентацию</h2>
         <p class="lead">Проведём личную презентацию прямо на территории посёлка: покажем генеральный план, участки и проекты домов.</p>
         <div class="contact" style="margin-top:38px">
+          <div class="phone-card">
+            <span class="phone-label">Звоните или пишите</span>
+            <a class="phone-num" href="tel:+79039143490">+7 903 914 34 90</a>
+            <span class="phone-sub">Звонок, WhatsApp или Telegram — как вам удобно</span>
+            <div class="quick">
+              <a class="btn btn-primary" href="tel:+79039143490">☎ Позвонить</a>
+            </div>
+          </div>
           <div class="cinfo">
-            <div class="row"><span class="ic">☎</span><div><b><a href="tel:+79039143490">+7 903 914 34 90</a></b><span>Позвоните или напишите — запишем на показ</span></div></div>
             <div class="row"><span class="ic">⌖</span><div><b>Как добраться</b><span>Томская область, Зоркальцевское сельское поселение, д. Петровский участок, мкрн. Героя ВОВ А.П. Дмитриева</span></div></div>
             <div class="row"><span class="ic">❋</span><div><b>Показ на территории посёлка</b><span>В 10 минутах от центра Томска, юго-восток Томского района, рядом с с. Зоркальцево</span></div></div>
+            <p class="cinfo-note">Позвоните или напишите в удобном мессенджере — подберём проект дома и участок и согласуем время показа прямо на территории посёлка.</p>
           </div>
-
-          <form class="contact-form" id="lead-form" novalidate>
-            <label for="f-name">Имя</label>
-            <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" required />
-            <label for="f-phone">Телефон</label>
-            <input id="f-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
-            <label for="f-msg">Сообщение</label>
-            <textarea id="f-msg" name="message" rows="3" placeholder="Интересует посёлок «Гармония», проект дома…"></textarea>
-            <button type="submit">Записаться на презентацию</button>
-            <p class="form-note" id="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
-          </form>
         </div>
       </section>
     </div>
@@ -504,7 +532,7 @@
   <footer class="site">
     <div class="wrap">
       <a class="brand" href="#" data-tab="home">
-        <span class="mark">Г</span>
+        <span class="mark"><svg class="mark-svg" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="#brand-leaf"/></svg></span>
         <span><span class="name">ГАРМОНИЯ</span><span class="sub">клубный посёлок</span></span>
       </a>
       <div style="font-size:14px">© <span id="year"></span> Клубный коттеджный посёлок «Гармония». Томск · +7 903 914 34 90</div>
@@ -524,6 +552,10 @@
         <div class="desc" id="modal-desc"></div>
         <div class="infra-title" id="modal-infra-title" style="display:none">Состав дома</div>
         <ul class="infra" id="modal-infra"></ul>
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="modal-cta" type="button">Записаться на просмотр →</button>
+          <span class="modal-phone">или звоните: <a href="tel:+79039143490">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a></span>
+        </div>
       </div>
     </div>
   </div>
@@ -539,63 +571,84 @@
       name: "Призма",
       status: "146 м²",
       statusType: "build",
-      meta: "Одноэтажный дом · терраса · гараж на 2 авто",
-      sub: "Одноэтажный дом площадью 146 м² с террасой и гаражом на два автомобиля.",
+      meta: "Одноэтажный · 3 спальни · гараж на 2 авто",
+      sub: "Комфортный одноэтажный дом в стиле хай-тек с рациональной планировкой и панорамным остеклением.",
       specs: [
         { k: "Площадь", v: "146 м²" },
         { k: "Этажность", v: "1 этаж" },
         { k: "Спальни", v: "3" },
         { k: "Санузлы", v: "2" },
         { k: "Гараж", v: "на 2 авто" },
-        { k: "Терраса", v: "есть" }
+        { k: "Габариты", v: "16,8 × 14,7 м" }
       ],
       desc: [
-        "Компактный одноэтажный дом в стиле хай-тек: чёткая геометрия, панорамное остекление и максимум естественного света.",
-        "Всё необходимое на одном уровне — просторная гостиная, отдельная кухня, три спальни и два санузла."
+        "Комфортный одноэтажный дом сочетает выразительный фасад в стиле хай-тек и рациональное внутреннее устройство. Просторная гостиная и частично отделённая кухня образуют удобное место для семейного досуга, а панорамное остекление наполняет интерьер светом.",
+        "Три спальни отделены от общей зоны — при желании можно добавить раздвижные двери для звукоизоляции. Самая большая спальня имеет собственную ванную. Дом с автономной котельной и тёплым гаражом пригоден для круглогодичного проживания."
       ],
-      infra: ["Гараж на 2 автомобиля", "Терраса", "Гостиная", "Кухня", "3 спальни", "2 санузла", "Котельная"]
+      infra: ["Гостиная с камином", "Кухня-столовая", "Панорамное остекление", "Терраса", "3 спальни", "Мастер-спальня с ванной", "2 санузла", "Тёплый гараж", "Котельная"]
     },
     {
       id: "panorama",
       name: "Панорама",
       status: "158 м²",
       statusType: "build",
-      meta: "Одноэтажный дом · терраса · гараж на 2 авто",
-      sub: "Одноэтажный дом площадью 158 м² с террасой, кухней-гостиной и гаражом на два автомобиля.",
+      meta: "Одноэтажный · 3 спальни · гараж на 2 авто",
+      sub: "Компактный одноэтажный коттедж в минималистичном стиле с большой площадью остекления.",
       specs: [
         { k: "Площадь", v: "158 м²" },
         { k: "Этажность", v: "1 этаж" },
         { k: "Спальни", v: "3" },
         { k: "Санузлы", v: "2" },
         { k: "Гараж", v: "на 2 авто" },
-        { k: "Прачечная", v: "есть" }
+        { k: "Габариты", v: "15,9 × 16,5 м" }
       ],
       desc: [
-        "Одноэтажный дом с открытой кухней-гостиной — светлое общее пространство для всей семьи.",
-        "Три спальни, два санузла, отдельная прачечная и котельная — комфортная жизнь на одном уровне."
+        "Компактный коттедж в современном минималистичном стиле с большой площадью остекления. Планировка чётко делит дом на две зоны: справа — дневная, с большой светлой гостиной, объединённой с кухней и столовой, камином и выходом на террасу.",
+        "Слева — зона отдыха: спальни, рабочий кабинет и два санузла, один из которых с прачечной. Хозяйственная часть с двухместным гаражом и котельной соединяется с жилой частью через прихожую."
       ],
-      infra: ["Гараж на 2 автомобиля", "Терраса", "Кухня-гостиная", "3 спальни", "2 санузла", "Прачечная", "Котельная"]
+      infra: ["Гостиная с камином", "Кухня-столовая", "Панорамное остекление", "Терраса", "3 спальни", "Кабинет", "2 санузла", "Прачечная", "Гараж на 2 авто", "Котельная"]
+    },
+    {
+      id: "rakurs",
+      name: "Ракурс",
+      status: "169 м²",
+      statusType: "build",
+      meta: "Одноэтажный · 3 спальни + кабинет · гараж на 2 авто",
+      sub: "Элегантный одноэтажный дом для семьи, с фасадом, обращённым в сад.",
+      specs: [
+        { k: "Площадь", v: "169 м²" },
+        { k: "Этажность", v: "1 этаж" },
+        { k: "Спальни", v: "3" },
+        { k: "Санузлы", v: "3" },
+        { k: "Гараж", v: "на 2 авто" },
+        { k: "Габариты", v: "20,95 × 11,36 м" }
+      ],
+      desc: [
+        "Элегантный одноэтажный дом, рассчитанный на семью из трёх-четырёх человек. Особенно выигрышно выглядит фасад, обращённый внутрь участка, — там можно разместить сад или открытый бассейн. Планировочный центр дома — светлая гостиная с камином, совмещённая с кухней и столовой и выходом на террасу.",
+        "Две спальни и рабочий кабинет размещены в левом крыле, а хозяйская спальня оборудована персональной ванной и гардеробной. Из прихожей с гардеробной предусмотрен вход в большой гаражный блок с отдельным техническим помещением для котельной."
+      ],
+      infra: ["Светлая гостиная с камином", "Кухня-столовая", "Терраса", "3 спальни", "Мастер-спальня с ванной и гардеробной", "Кабинет", "3 санузла", "Гардеробная в прихожей", "Гараж на 2 авто", "Котельная"]
     },
     {
       id: "vista",
       name: "Виста",
       status: "199 м²",
       statusType: "build",
-      meta: "Двухэтажный дом · терраса и балкон · гараж",
-      sub: "Двухэтажный дом площадью 199 м² с террасой, балконом и гаражом.",
+      meta: "Двухэтажный · 4 спальни · терраса и балкон",
+      sub: "Двухэтажный коттедж хай-тек: дневная зона на первом этаже, четыре спальни на втором.",
       specs: [
         { k: "Площадь", v: "199 м²" },
         { k: "Этажность", v: "2 этажа" },
         { k: "Спальни", v: "4" },
         { k: "Санузлы", v: "3" },
         { k: "Гараж", v: "на 1 авто" },
-        { k: "Балкон", v: "есть" }
+        { k: "Габариты", v: "11,66 × 14,36 м" }
       ],
       desc: [
-        "Просторный двухэтажный дом с террасой и балконом — максимум пространства для большой семьи.",
-        "Четыре спальни, три санузла, кухня-столовая, отдельная мастерская и прачечная."
+        "Двухэтажный коттедж с выразительным обликом хай-тек: простые геометрические формы, плоская кровля и широкое остекление. Первый этаж — дневная зона: гостиная с камином, объединённая с кухней-столовой, и стеклянные двери с выходом на террасу.",
+        "На втором этаже — четыре спальни: одна с индивидуальной ванной, три с общей, каждая с гардеробом; из двух спален есть выход на балкон. В левой части дома — хозяйственная зона с гаражом, мастерской и котельной."
       ],
-      infra: ["Гараж на 1 автомобиль", "Терраса", "Балкон", "Гостиная", "Кухня-столовая", "4 спальни", "3 санузла", "Прачечная", "Котельная", "Мастерская"]
+      infra: ["Гостиная с камином", "Кухня-столовая", "Терраса", "Балкон", "4 спальни", "Мастер-спальня с ванной", "Гардеробы", "3 санузла", "Гараж", "Мастерская", "Котельная"]
     }
   ];
 
@@ -677,14 +730,8 @@
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-  /* ── Форма заявки (заглушка) ─────────────────────────────────── */
-  document.getElementById("lead-form").addEventListener("submit", e => {
-    e.preventDefault();
-    const note = document.getElementById("form-note");
-    note.textContent = "Спасибо! Заявка получена — мы свяжемся с вами и запишем на показ. (Демо: отправка на сервер пока не подключена.)";
-    note.style.color = "#2f7d55";
-    e.target.reset();
-  });
+  /* ── «Записаться на просмотр» → к контактам с номером ────────── */
+  document.getElementById("modal-cta").addEventListener("click", () => { closeModal(); openTab("contacts"); });
 
   /* ── Инициализация ───────────────────────────────────────────── */
   document.getElementById("year").textContent = new Date().getFullYear();
