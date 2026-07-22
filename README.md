@@ -63,6 +63,10 @@
    `PROJECTS`; фоновые картинки блоков — в CSS (`.hero-visual`, `.about-visual`,
    `.village .vmap`) через `url('img/…')`. Чтобы заменить — положите файл с тем
    же именем в `img/`.
+7. **Планировки** — в окне дома показывается план (`*-plan.jpg` в `img/`).
+   Задаётся полем `plan` в объекте `PROJECTS` — массив из одного или
+   нескольких этажей: `plan: [{ k: "1 этаж", img: "img/vista-plan-1.jpg" },
+   { k: "2 этаж", img: "img/vista-plan-2.jpg" }]`.
 
 ## Публикация (GitHub Pages)
 

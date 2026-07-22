@@ -303,6 +303,11 @@
     .modal .infra-title { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--ink); margin-top: 6px; }
     .modal .infra { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
     .modal .infra li { background: var(--accent-soft); color: #7a5514; font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 999px; }
+    .modal .plan-title { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--ink); margin-top: 22px; }
+    .modal .plan { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 14px; }
+    .plan-fig { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; box-shadow: var(--shadow-sm); }
+    .plan-fig img { width: 100%; height: auto; border-radius: 6px; }
+    .plan-fig figcaption { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; font-weight: 600; }
 
     /* ── Адаптив ───────────────────────────────────────────────── */
     @media (max-width: 900px) {
@@ -572,6 +577,8 @@
         <div class="desc" id="modal-desc"></div>
         <div class="infra-title" id="modal-infra-title" style="display:none">Состав дома</div>
         <ul class="infra" id="modal-infra"></ul>
+        <div class="plan-title" id="modal-plan-title" style="display:none">Планировка</div>
+        <div class="plan" id="modal-plan"></div>
         <div class="modal-actions">
           <button class="btn btn-primary" id="modal-cta" type="button">Записаться на просмотр →</button>
           <span class="modal-phone">или звоните: <a href="tel:+79039143490">+7&nbsp;903&nbsp;914&nbsp;34&nbsp;90</a></span>
@@ -589,6 +596,7 @@
     {
       id: "prizma",
       img: "img/prizma.jpg",
+      plan: [{ k: "Планировка", img: "img/prizma-plan.jpg" }],
       name: "Призма",
       status: "146 м²",
       statusType: "build",
@@ -611,6 +619,7 @@
     {
       id: "panorama",
       img: "img/panorama.jpg",
+      plan: [{ k: "Планировка", img: "img/panorama-plan.jpg" }],
       name: "Панорама",
       status: "158 м²",
       statusType: "build",
@@ -633,6 +642,7 @@
     {
       id: "rakurs",
       img: "img/rakurs.jpg",
+      plan: [{ k: "Планировка", img: "img/rakurs-plan.jpg" }],
       name: "Ракурс",
       status: "169 м²",
       statusType: "build",
@@ -655,6 +665,7 @@
     {
       id: "vista",
       img: "img/vista.jpg",
+      plan: [{ k: "1 этаж", img: "img/vista-plan-1.jpg" }, { k: "2 этаж", img: "img/vista-plan-2.jpg" }],
       name: "Виста",
       status: "199 м²",
       statusType: "build",
@@ -746,6 +757,11 @@
     infra.innerHTML = (p.infra || []).map(i => `<li>${i}</li>`).join("");
     infra.style.display = hasInfra ? "flex" : "none";
     document.getElementById("modal-infra-title").style.display = hasInfra ? "block" : "none";
+    const planWrap = document.getElementById("modal-plan");
+    const hasPlan = p.plan && p.plan.length;
+    planWrap.innerHTML = (p.plan || []).map(pl =>
+      `<figure class="plan-fig"><img src="${pl.img}" alt="Планировка — ${pl.k}" loading="lazy"><figcaption>${pl.k}</figcaption></figure>`).join("");
+    document.getElementById("modal-plan-title").style.display = hasPlan ? "block" : "none";
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
     modal.querySelector(".close").focus();
